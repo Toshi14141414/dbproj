@@ -7,20 +7,41 @@ class Register extends Component {
 
     this.state = {
       email: null,
+      checkEmail: false,
       firstName: null,
+      checkFirstName: false,
       lastName: null,
+      checkLastName: false,
       address: null,
+      checkAddress: false,
       sex: "other",
       apt: null,
       city: null,
+      checkCity: false,
       state: null,
-      zip: null,
-      password: null
+      checkState: false,
+      password: null,
+      checkPassword: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  // handleEmailChange(event) {
+  //   this.setState({
+  //     [event.target.name]: event.target.value
+  //   });
+  //   // if (
+  //   //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(event.target.value)
+  //   // ) {
+  //   //   console.log("email correct");
+  //   //   // this.setState({ email: inputEmail });
+  //   // } else {
+  //   //   // this.setState({ checkEmail: !this.state.checkEmail });
+  //   //   console.log("your email address is wrong");
+  //   // }
+  // }
 
   handleChange(event) {
     this.setState({
@@ -37,8 +58,8 @@ class Register extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        this.setState({ result: data[0].result });
-        console.log(data[0].result);
+        this.setState({ result: data.result });
+        console.log(data.result);
       })
       .catch(err => console.error(err));
   }
@@ -58,6 +79,9 @@ class Register extends Component {
                   value={this.state.email || ""}
                   onChange={this.handleChange}
                 ></input>
+                {this.state.checkEmail && (
+                  <p>Please enter correct email address</p>
+                )}
               </label>
             </Row>
             <Row>
@@ -90,9 +114,9 @@ class Register extends Component {
                 value={this.state.sex || ""}
                 onChange={this.handleChange}
               >
-                <option value="other">Other</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </Row>
             <Row>
@@ -139,18 +163,6 @@ class Register extends Component {
                   name="state"
                   className="register"
                   value={this.state.state || ""}
-                  onChange={this.handleChange}
-                ></input>
-              </label>
-            </Row>
-            <Row>
-              <label>
-                ZIP:
-                <input
-                  type="text"
-                  name="zip"
-                  className="register"
-                  value={this.state.zip || ""}
                   onChange={this.handleChange}
                 ></input>
               </label>
