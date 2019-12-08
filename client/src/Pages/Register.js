@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 class Register extends Component {
   constructor(props) {
@@ -49,6 +50,15 @@ class Register extends Component {
     });
   }
 
+  registerResponse() {
+    if (!this.state.result) {
+      alert("Register Failer, Please try another email");
+    } else {
+      alert("Register success");
+      this.props.history.push("/home");
+    }
+  }
+
   handleSubmit(event) {
     // alert("email" + this.state.email);
     // alert("password" + this.state.password);
@@ -60,6 +70,7 @@ class Register extends Component {
       .then(data => {
         this.setState({ result: data.result });
         console.log(data.result);
+        this.registerResponse();
       })
       .catch(err => console.error(err));
   }
@@ -187,4 +198,4 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default withRouter(Register);

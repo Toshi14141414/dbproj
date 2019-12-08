@@ -14,9 +14,7 @@ function App() {
         <Route exact path="/">
           <Index />
         </Route>
-        <Route exact path="/home">
-          <Home />
-        </Route>
+        <Route exact path="/home:userKey" component={Home} />
         <Route exact path="/register">
           <Register />
         </Route>

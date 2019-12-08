@@ -25,7 +25,7 @@ class Index extends Component {
       alert("login failed");
     } else {
       alert("login success");
-      this.props.history.push("/home");
+      this.props.history.push(`/home:${this.state.email}`);
     }
   }
 
