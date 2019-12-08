@@ -55,4 +55,12 @@ db.registerNewUser = (email, firstName, lastName, gender,address, apt, city, sta
       });
 }
 
+
+/*
+Get Profile
+Get Threads
+*/
+
+
+
 module.exports = db;

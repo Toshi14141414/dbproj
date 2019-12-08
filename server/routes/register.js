@@ -3,7 +3,6 @@ const db = require('../db');
 const router  = express.Router();
 
 router.get('/', async (req, res, next)=>{
-
     console.log(req.query);
     const {email, firstName, lastName, address,sex, apt, city, state, zip, password } = req.query;
     try{
