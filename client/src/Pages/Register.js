@@ -58,8 +58,8 @@ class Register extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        this.setState({ result: data[0].result });
-        console.log(data[0].result);
+        this.setState({ result: data.result });
+        console.log(data.result);
       })
       .catch(err => console.error(err));
   }
