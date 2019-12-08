@@ -12,7 +12,7 @@ class Index extends Component {
     this.state = {
       email: null,
       password: null,
-      response: ""
+      result: 0
     };
 
     this.handleRegisterClick = this.handleRegisterClick.bind(this);
@@ -20,19 +20,13 @@ class Index extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  getLoginResponse() {
-    fetch("/api/login", { method: "GET" })
-      .then(response => {
-        console.log(response);
-        console.log("text");
-        console.log(response.text());
-      })
-      .then(function(data) {
-        const items = data;
-        console.log("items" + items);
-        console.log(items);
-      })
-      .catch(err => console.error(err));
+  loginResponse() {
+    if (!this.state.result) {
+      alert("login failed");
+    } else {
+      alert("login success");
+      this.props.history.push("/home");
+    }
   }
 
   handleSubmit(event) {
@@ -43,9 +37,12 @@ class Index extends Component {
       `/api/login?email=${this.state.email}&password=${this.state.password}`
     )
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        this.setState({ result: data[0].result });
+        console.log(data[0].result);
+        this.loginResponse();
+      })
       .catch(err => console.error(err));
-    this.getLoginResponse();
   }
 
   handleChange(event) {
