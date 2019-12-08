@@ -25,12 +25,9 @@ class Index extends Component {
     event.preventDefault();
     const { email, password } = this.state;
     const user = { email, password };
-    axios
-      .post("http://loalhost:5000/api/login", user)
-      .then(() => console.log("passed user information"))
-      .catch(err => {
-        console.error(err);
-      });
+    fetch(`http://localhost:5000/api/login?email=${user.email}&password=${user.password}`)
+    .catch(err=> console.error(err))
+    
   }
 
   handleChange(event) {
