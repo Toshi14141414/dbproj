@@ -5,19 +5,20 @@ import "./App.scss";
 //import pages
 import Index from "./Pages/Index";
 import Home from "./Pages/Home";
+import Register from "./Pages/Register";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/">
+        <Route exact path="/">
           <Index />
         </Route>
-        <Route path="/home">
+        <Route exact path="/home">
           <Home />
         </Route>
-        <Route path="/Register">
-          <Home />
+        <Route exact path="/register">
+          <Register />
         </Route>
       </Switch>
     </Router>

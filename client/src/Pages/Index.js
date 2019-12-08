@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Container, Row } from "react-bootstrap";
-import axios from "axios";
+import { withRouter } from "react-router-dom";
 
 //style
 import "../style/index.scss";
@@ -20,14 +20,16 @@ class Index extends Component {
   }
 
   handleSubmit(event) {
-    alert("email" + this.state.email);
-    alert("password" + this.state.password);
+    // alert("email" + this.state.email);
+    // alert("password" + this.state.password);
     event.preventDefault();
     const { email, password } = this.state;
-    const user = { email, password };
-    fetch(`http://localhost:5000/api/login?email=${user.email}&password=${user.password}`)
-    .catch(err=> console.error(err))
-    
+    fetch(
+      `/api/login?email=${this.state.email}&password=${this.state.password}`
+    )
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(err => console.error(err));
   }
 
   handleChange(event) {
@@ -37,7 +39,7 @@ class Index extends Component {
   }
 
   handleRegisterClick() {
-    console.log("register");
+    this.props.history.push("/register");
   }
 
   render() {
@@ -71,13 +73,13 @@ class Index extends Component {
             </Row>
             <Row>
               <input type="submit" value="Sign In" />
-              <button onClick={this.handleRegisterClick}>Register</button>
             </Row>
           </form>
+          <button onClick={this.handleRegisterClick}>Register</button>
         </Container>
       </div>
     );
   }
 }
 
-export default Index;
+export default withRouter(Index);
