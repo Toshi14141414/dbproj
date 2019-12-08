@@ -37,8 +37,8 @@ class Register extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        this.setState({ result: data[0].result });
-        console.log(data[0].result);
+        this.setState({ result: data.result });
+        console.log(data.result);
       })
       .catch(err => console.error(err));
   }
@@ -90,9 +90,9 @@ class Register extends Component {
                 value={this.state.sex || ""}
                 onChange={this.handleChange}
               >
-                <option value="other">Other</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Other">Other</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
             </Row>
             <Row>
