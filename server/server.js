@@ -1,12 +1,17 @@
 const express = require("express");
-const apiRouter = require("./routes");
+const login_validate = require("./routes/index.js");
+const register = require('./routes/register.js');
+
+//const register = require();
 const cors = require("cors");
-const logger = require("morgan");
+//const logger = require("morgan");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
-app.use('/api/login', apiRouter);
+app.use('/api/login', login_validate);
+app.use('/api/register', register);
+
 
 // 1. express-validator // check if valid input fields
 // 2. json web token
