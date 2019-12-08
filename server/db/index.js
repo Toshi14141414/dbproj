@@ -22,4 +22,17 @@ db.all = ()=>{
     });
 };
 
+db.validateUsers = (email, password) =>{
+    return new Promise((resolve, reject)=>{
+        console.log("database calling....", email, password);
+        conn.query(`SELECT ValidateUser(?, ?)`, [email, password], (err, results)=>{
+            if(err){
+                return reject(err);
+            }
+
+            return resolve(results);
+        });
+    });
+}
+
 module.exports = db;
