@@ -1,14 +1,32 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Envelope, EnvelopeOpen } from "styled-icons/fa-regular";
+
+//img
+import default_user_img from "../default_img/default_user_icon.png";
+
+//Customer Components
 import RelationShowCase from "../components/RelationShowCase";
 import FeedTitle from "../components/FeedTitle";
+
+//style
+import "../style/home.scss";
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userEmail: "",
-      userName: ""
+      firstName: "",
+      lastName: "",
+      aid: "",
+      apt: "",
+      gender: "",
+      descrip: "",
+      img_path: null,
+      bid: null,
+      hasUnreadMSG: null,
+      allFeeds: []
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -22,7 +40,19 @@ class Home extends Component {
     fetch(`/api/home?email=${subUserKey}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({ userEmail: data.email });
+        this.setState({
+          userEmail: data.email,
+          firstName: data.fname,
+          lastName: data.lname,
+          aid: data.aid,
+          apt: data.apt,
+          gender: data.gender,
+          descrip: data.descrip,
+          img_path: data.img_path,
+          bid: data.bid,
+          hasUnreadMSG: data.hasUnreadMSG,
+          allFeeds: data.allFeeds
+        });
         console.log(data);
       })
       .catch(err => console.error(err));
@@ -56,12 +86,15 @@ class Home extends Component {
     return (
       <Container>
         <Row>
-          <Col sm={2}>
-            <p>Username</p>
-            <button>Edit Profile</button>
-            <button>
-              News<p>*</p>
-            </button>
+          <Col sm={2} className="home-page-left">
+            <img src={default_user_img} className="home-user-img" />
+            <p className="home-user-name">
+              {this.state.firstName} {this.state.lastName}
+            </p>
+            <button className="home-edit-profile">Edit Profile</button>
+            <button>News</button>
+            {this.state.hasUnreadMSG && <Envelope width="1.8rem" />}
+            {!this.state.hasUnreadMSG && <EnvelopeOpen />}
             <button>Add Feed</button>
             <p>Show user</p>
             <button
@@ -95,7 +128,9 @@ class Home extends Component {
           </Col>
           <Col sm={10}>
             <p>Feeds</p>
-            <FeedTitle />
+            {this.state.allFeeds.map(feed => (
+              <FeedTitle value={feed} username={this.state.firstName} />
+            ))}
           </Col>
         </Row>
       </Container>
