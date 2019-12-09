@@ -17,10 +17,12 @@ class Home extends Component {
 
   componentDidMount() {
     const { userKey } = this.props.match.params;
-    fetch(`/api/home?email=${userKey}`)
+    const subUserKey = userKey.substring(1);
+    console.log(subUserKey);
+    fetch(`/api/home?email=${subUserKey}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({ result: data });
+        this.setState({ userEmail: data.email });
         console.log(data);
       })
       .catch(err => console.error(err));
@@ -49,7 +51,7 @@ class Home extends Component {
       })
       .catch(err => console.error(err));
   }
-  
+
   render() {
     return (
       <Container>
@@ -62,10 +64,16 @@ class Home extends Component {
             </button>
             <button>Add Feed</button>
             <p>Show user</p>
-            <button name="friends" onClick={e => this.handleRelationClick(e)}>
+            <button
+              name="list_all_friends"
+              onClick={e => this.handleRelationClick(e)}
+            >
               Friends
             </button>
-            <button name="neighbors" onClick={e => this.handleRelationClick(e)}>
+            <button
+              name="list_all_neighbors"
+              onClick={e => this.handleRelationClick(e)}
+            >
               Neighbor
             </button>
             <p>Feeds</p>
