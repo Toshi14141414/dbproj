@@ -10,6 +10,106 @@ const conn = mysql.createPool({
 
 let db = {};
 
+
+db.ListAllNeighbours = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call ListAllNeighbours(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
+db.ListAllFriends = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call ListAllFriends(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
+db.getHoodFeeds = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getHoodFeeds(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getBlockFeeds = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getBlockFeeds(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
+db.getNeighbourFeeds = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getNeighbourFeeds(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getFriendFeeds = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getFriendFeeds(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
 db.getAllFeeds = (email) =>{
   return new Promise((resolve, reject) => {
     conn.query(
@@ -19,7 +119,6 @@ db.getAllFeeds = (email) =>{
         if (err) {
           return reject(err);
         }
-
         return resolve(results);
       }
     );
