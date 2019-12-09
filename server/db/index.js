@@ -10,9 +10,88 @@ const conn = mysql.createPool({
 
 let db = {};
 
+db.getAllFeeds = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getAllFeeds(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getUserProfile = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getProfile(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.hasUnreadRequests = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `SELECT hasUnreadRequest(?) AS hasUnreadMSG`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getCurrentHood = (email) =>{
+  return new Promise((resolve, reject) => {
+  //console.log("get current block", email);
+    conn.query(
+      `SELECT getCurrentHood(?) AS hid`, [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getCurrentBlock = (email) =>{
+  return new Promise((resolve, reject) => {
+  //console.log("get current block", email);
+    conn.query(
+      `SELECT getCurrentBlock(?) AS bid`, [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
 db.validateUsers = (email, password) => {
   return new Promise((resolve, reject) => {
-    console.log("database calling....", email, password);
+    //console.log("database calling....", email, password);
     conn.query(
       `SELECT ValidateUser(?, ?) AS result`,
       [email, password],
@@ -54,13 +133,6 @@ db.registerNewUser = (email, firstName, lastName, gender,address, apt, city, sta
         );
       });
 }
-
-
-/*
-Get Profile
-Get Threads
-*/
-
 
 
 module.exports = db;
