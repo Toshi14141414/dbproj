@@ -1,5 +1,5 @@
 const express = require("express");
-const db = require('../db');
+const db = require('../db/index.js');
 const router  = express.Router();
 
 function jsonConcat(o1, o2) {
@@ -39,11 +39,11 @@ router.get('/', async (req, res, next)=>{
 
         var allFeed_string = JSON.stringify(user_feed_all);
         var allFeed_array   = JSON.parse(allFeed_string)[0];
-        var allFeed_json = {allFeeds:allFeed_array};
+        var allFeed_json = {feeds:allFeed_array};
         console.log("allFeed array", allFeed_array);
         console.log("allFeed_json", allFeed_json);
 
-        const result = jsonConcat(user_profile_json, jsonConcat(block_json, jsonConcat(unreadMSG_json, allFeed_json)));
+        const result = jsonConcat(user_profile_json, jsonConcat(block_json, jsonConcat(hood_json, jsonConcat(unreadMSG_json, allFeed_json))));
         console.log(result);
         res.send(result);
         
@@ -54,5 +54,67 @@ router.get('/', async (req, res, next)=>{
 
 });
 
+
+router.get('/feed', async (req, res, next)=>{
+
+    const {type, email} = req.query;
+    //console.log(type, email);
+    var feed_result;
+    try{
+        if (type=="All"){
+            console.log("All");
+            feed_result   = await db.getAllFeeds(email);
+        }
+        else if (type=="Friend"){
+            console.log("Friend");
+            feed_result   = await db.getFriendFeeds(email);
+        }
+        else if (type=="Neighbor"){
+            console.log("Neighbor");
+            feed_result   = await db.getNeighbourFeeds(email);
+        }
+        else if (type=="Block"){
+            console.log("Block");
+            feed_result   = await db.getBlockFeeds(email);
+        }
+        else if (type=="Hood"){
+            console.log("Hood");
+            feed_result   = await db.getHoodFeeds(email);
+        }
+        
+        var feed_string  = JSON.stringify(feed_result);
+        var feed_array   = JSON.parse(feed_string)[0];
+        var feed_json    = {feeds:feed_array};
+        res.send(feed_json);
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+    
+});
+
+router.get('/relation', async (req, res, next)=>{
+    const {type, email} = req.query;
+    //console.log(type, email);
+    try{
+        var feed_result;
+        if (type=="list_all_neighbors"){
+            console.log("list all neighbors");
+            feed_result   = await db.ListAllNeighbours(email);
+        }
+        else if (type=="list_all_friends"){
+            console.log("list_all_friends");
+            feed_result   = await db.ListAllFriends(email);
+        }
+        var feed_string  = JSON.stringify(feed_result);
+        var feed_array   = JSON.parse(feed_string)[0];
+        var feed_json    = {feeds:feed_array};
+        res.send(feed_json);
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+    
+});
 
 module.exports = router;
