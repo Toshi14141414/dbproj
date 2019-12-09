@@ -3,7 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import default_user_img from "../default_img/default_user_icon.png";
 
 //style
-import "./style/relationShowCase.scss";
+import "../style/relationShowCase.scss";
 
 class RelationShowCase extends Component {
   render() {
