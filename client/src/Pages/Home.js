@@ -26,7 +26,7 @@ class Home extends Component {
       img_path: null,
       bid: null,
       hasUnreadMSG: null,
-      allFeeds: []
+      feeds: []
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -51,7 +51,7 @@ class Home extends Component {
           img_path: data.img_path,
           bid: data.bid,
           hasUnreadMSG: data.hasUnreadMSG,
-          allFeeds: data.allFeeds
+          feeds: data.feeds
         });
         console.log(data);
       })
@@ -128,7 +128,7 @@ class Home extends Component {
           </Col>
           <Col sm={10}>
             <p>Feeds</p>
-            {this.state.allFeeds.map(feed => (
+            {this.state.feeds.map(feed => (
               <FeedTitle value={feed} username={this.state.firstName} />
             ))}
           </Col>
