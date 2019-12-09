@@ -30,8 +30,6 @@ class Index extends Component {
   }
 
   handleSubmit(event) {
-    // alert("email" + this.state.email);
-    // alert("password" + this.state.password);
     event.preventDefault();
     fetch(
       `/api/login?email=${this.state.email}&password=${this.state.password}`
