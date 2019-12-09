@@ -3,7 +3,7 @@ const db = require('../db');
 const router  = express.Router();
 
 router.get('/', async (req, res, next)=>{
-
+    console.log("index.js");
     const {email, password} = req.query;
     console.log(email, password);
 
