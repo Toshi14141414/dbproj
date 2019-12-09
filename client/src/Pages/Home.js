@@ -25,8 +25,14 @@ class Home extends Component {
       descrip: "",
       img_path: null,
       bid: null,
-      hasUnreadMSG: null,
-      feeds: []
+      hid: null,
+      hasUnreadMSG: false,
+      checkDefault: true,
+      feeds: [],
+      checkRelation: false,
+      relation: [],
+      checkTypeFeeds: false,
+      typeFeeds: []
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -60,12 +66,17 @@ class Home extends Component {
 
   handleFeedClick(e) {
     const type = e.target.name;
-    console.log("trying to get " + type + " feed");
-    fetch(`/api/home/feed?type=${type}&user=${this.state.userEmail}`)
+    console.log("trying to get " + type + " feed from " + this.state.userEmail);
+    fetch(`/api/home/feed?type=${type}&email=${this.state.userEmail}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({ result: data });
         console.log(data);
+        this.setState({
+          checkDefault: false,
+          checkRelation: false,
+          checkTypeFeeds: true,
+          typeFeeds: data.feeds
+        });
       })
       .catch(err => console.error(err));
   }
@@ -73,11 +84,16 @@ class Home extends Component {
   handleRelationClick(e) {
     const type = e.target.name;
     console.log("trying to get all " + type + " relationship");
-    fetch(`/api/home/relation?type=${type}&user=${this.state.userEmail}`)
+    fetch(`/api/home/relation?type=${type}&email=${this.state.userEmail}`)
       .then(res => res.json())
       .then(data => {
-        this.setState({ result: data });
         console.log(data);
+        this.setState({
+          checkDefault: false,
+          checkTypeFeeds: false,
+          checkRelation: true,
+          relation: data.relation
+        });
       })
       .catch(err => console.error(err));
   }
@@ -110,6 +126,7 @@ class Home extends Component {
               Neighbor
             </button>
             <p>Feeds</p>
+
             <button name="All" onClick={e => this.handleFeedClick(e)}>
               All
             </button>
@@ -128,9 +145,18 @@ class Home extends Component {
           </Col>
           <Col sm={10}>
             <p>Feeds</p>
-            {this.state.feeds.map(feed => (
-              <FeedTitle value={feed} username={this.state.firstName} />
-            ))}
+            {this.state.checkDefault &&
+              this.state.feeds.map(feed => (
+                <FeedTitle value={feed} key={feed.thread_id} />
+              ))}
+            {this.state.checkTypeFeeds &&
+              this.state.typeFeeds.map(feed => (
+                <FeedTitle value={feed} key={feed.thread_id} />
+              ))}
+            {this.state.checkRelation &&
+              this.state.relation.map(relation => (
+                <RelationShowCase value={relation} key={relation.friend_id} />
+              ))}
           </Col>
         </Row>
       </Container>

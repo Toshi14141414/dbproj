@@ -18,8 +18,10 @@ class RelationShowCase extends Component {
             />
           </Col>
           <Col sm={8}>
-            <p>{this.props.name}Name</p>
-            <p>{this.props.description}Des</p>
+            <p>
+              {this.props.value.fname} {this.props.value.lname}
+            </p>
+            <p>{this.props.descrip}</p>
           </Col>
         </Row>
       </Container>
