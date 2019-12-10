@@ -1,10 +1,22 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { withRouter } from "react-router-dom";
 
 class FeedTitle extends Component {
   constructor(props) {
     super(props);
-    this;
+    this.state = {
+      thread_id: this.props.value.thread_id,
+      user: this.props.user
+    };
+    this.handleGoPost = this.handleGoPost.bind(this);
+  }
+
+  handleGoPost() {
+    this.props.history.push({
+      pathname: `/post:${this.state.thread_id}`,
+      state: { thread_id: this.state.thread_id, user: this.state.user }
+    });
   }
 
   render() {
@@ -12,7 +24,9 @@ class FeedTitle extends Component {
       <Container>
         <Row>
           <Col sm={6}>
-            <p>{this.props.value.title}</p>
+            <button onClick={this.handleGoPost}>
+              {this.props.value.title}
+            </button>
           </Col>
           <Col sm={2}>
             <p>
@@ -28,4 +42,4 @@ class FeedTitle extends Component {
   }
 }
 
-export default FeedTitle;
+export default withRouter(FeedTitle);

@@ -6,18 +6,16 @@ import "./App.scss";
 import Index from "./Pages/Index";
 import Home from "./Pages/Home";
 import Register from "./Pages/Register";
+import Post from "./Pages/Post";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Index />
-        </Route>
+        <Route exact path="/" component={Index} />
         <Route exact path="/home:userKey" component={Home} />
-        <Route exact path="/register">
-          <Register />
-        </Route>
+        <Route exact path="/post:threadID" component={Post} />
+        <Route exact path="/register" component={Register} />
       </Switch>
     </Router>
   );

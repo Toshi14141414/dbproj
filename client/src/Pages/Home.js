@@ -147,11 +147,19 @@ class Home extends Component {
             <p>Feeds</p>
             {this.state.checkDefault &&
               this.state.feeds.map(feed => (
-                <FeedTitle value={feed} key={feed.thread_id} />
+                <FeedTitle
+                  value={feed}
+                  user={this.state.userEmail}
+                  key={feed.thread_id}
+                />
               ))}
             {this.state.checkTypeFeeds &&
               this.state.typeFeeds.map(feed => (
-                <FeedTitle value={feed} key={feed.thread_id} />
+                <FeedTitle
+                  value={feed}
+                  user={this.state.userEmail}
+                  key={feed.thread_id}
+                />
               ))}
             {this.state.checkRelation &&
               this.state.relation.map(relation => (
