@@ -1,30 +1,49 @@
 @import "./primary";
 
-.home-page-left {
+.home-page-center {
   text-align: center;
-  padding-top: 2rem;
+}
+
+.home-page-left {
+  background-color: $primary-grey;
+  padding-left: 3.8rem;
+  padding-top: 1rem;
 }
 
 .home-user-img {
   width: 7rem;
   height: 7rem;
-  margin: 0 auto;
 }
 
 .home-user-name {
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
-  padding-top: 0.5rem;
+  color: $white;
+  padding-top: 1rem;
 }
 
-.home-edit-profile {
+.home-left-row {
+  padding-top: 1rem;
+}
+
+.home-button-green {
   background-color: $primary-green;
   border: 0.2rem solid $primary-green;
   color: $white;
+  width: 6.7rem;
+  height: 2.2rem;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 1rem;
   font-weight: bold;
+  border-radius: 0.5rem;
+}
+
+.home-left-text {
+  color: $white;
+  font-weight: bold;
+  padding-top: 1rem;
+  font-size: 1.2em;
 }

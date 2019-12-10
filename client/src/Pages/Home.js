@@ -100,50 +100,93 @@ class Home extends Component {
 
   render() {
     return (
-      <Container>
+      <Container fluid className="home-page-container">
         <Row>
-          <Col sm={2} className="home-page-left">
-            <img src={default_user_img} className="home-user-img" />
-            <p className="home-user-name">
-              {this.state.firstName} {this.state.lastName}
-            </p>
-            <button className="home-edit-profile">Edit Profile</button>
-            <button>News</button>
-            {this.state.hasUnreadMSG && <Envelope width="1.8rem" />}
-            {!this.state.hasUnreadMSG && <EnvelopeOpen />}
-            <button>Add Feed</button>
-            <p>Show user</p>
-            <button
-              name="list_all_friends"
-              onClick={e => this.handleRelationClick(e)}
-            >
-              Friends
-            </button>
-            <button
-              name="list_all_neighbors"
-              onClick={e => this.handleRelationClick(e)}
-            >
-              Neighbor
-            </button>
-            <p>Feeds</p>
-
-            <button name="All" onClick={e => this.handleFeedClick(e)}>
-              All
-            </button>
-            <button name="Friend" onClick={e => this.handleFeedClick(e)}>
-              Friends
-            </button>
-            <button name="Neighbor" onClick={e => this.handleFeedClick(e)}>
-              Neighbor
-            </button>
-            <button name="Block" onClick={e => this.handleFeedClick(e)}>
-              Block
-            </button>
-            <button name="Hood" onClick={e => this.handleFeedClick(e)}>
-              Hood
-            </button>
+          <Col sm={3} className="home-page-left">
+            <Container fluid className="home-page-left">
+              <Row>
+                <img src={default_user_img} className="home-user-img" />
+              </Row>
+              <Row>
+                <p className="home-user-name">
+                  {this.state.firstName} {this.state.lastName}
+                </p>
+              </Row>
+              <Row>
+                <button className="home-button-green">Edit Profile</button>
+              </Row>
+              <Row className="home-left-row">
+                <button className="home-button-green">
+                  News{"  "}{" "}
+                  {this.state.hasUnreadMSG && (
+                    <Envelope
+                      width="1.2rem"
+                      color="#e96944"
+                      style={{ marginLeft: "0.4rem" }}
+                    />
+                  )}
+                  {!this.state.hasUnreadMSG && (
+                    <EnvelopeOpen
+                      width="1.2rem"
+                      color="#fff"
+                      style={{ marginLeft: "0.4rem" }}
+                    />
+                  )}
+                </button>
+              </Row>
+              <Row className="home-left-row">
+                <button className="home-button-green">Add Feed</button>
+              </Row>
+              <Row className="home-left-row">
+                <p className="home-left-text">Relationship</p>
+              </Row>
+              <Row>
+                <button
+                  name="list_all_friends"
+                  onClick={e => this.handleRelationClick(e)}
+                >
+                  Friends
+                </button>
+              </Row>
+              <Row>
+                <button
+                  name="list_all_neighbors"
+                  onClick={e => this.handleRelationClick(e)}
+                >
+                  Neighbor
+                </button>
+              </Row>
+              <Row>
+                <p className="home-left-text">Feeds</p>
+              </Row>
+              <Row>
+                <button name="All" onClick={e => this.handleFeedClick(e)}>
+                  All
+                </button>
+              </Row>
+              <Row>
+                <button name="Friend" onClick={e => this.handleFeedClick(e)}>
+                  Friends
+                </button>
+              </Row>
+              <Row>
+                <button name="Neighbor" onClick={e => this.handleFeedClick(e)}>
+                  Neighbor
+                </button>
+              </Row>
+              <Row>
+                <button name="Block" onClick={e => this.handleFeedClick(e)}>
+                  Block
+                </button>
+              </Row>
+              <Row>
+                <button name="Hood" onClick={e => this.handleFeedClick(e)}>
+                  Hood
+                </button>
+              </Row>
+            </Container>
           </Col>
-          <Col sm={10}>
+          <Col sm={9}>
             <p>Feeds</p>
             {this.state.checkDefault &&
               this.state.feeds.map(feed => (
