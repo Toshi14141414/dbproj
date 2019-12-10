@@ -10,6 +10,23 @@ const conn = mysql.createPool({
 
 let db = {};
 
+db.StartMessageIn = (user, type, title, body) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call StartMessageIn(?, ?, ?, ?)`,
+      [user, type, title, body],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
 db.replyToThread = (thread, user, reply) =>{
   return new Promise((resolve, reject) => {
     conn.query(
