@@ -32,11 +32,18 @@ class Home extends Component {
       checkRelation: false,
       relation: [],
       checkTypeFeeds: false,
-      typeFeeds: []
+      typeFeeds: [],
+      checkAddFeed: false,
+      addFeedTitle: "",
+      addFeedBody: "",
+      addFeedType: "AllFriends"
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
     this.handleRelationClick = this.handleRelationClick.bind(this);
+    this.handleAddFeedClick = this.handleAddFeedClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleAddFeedSubmit = this.handleAddFeedSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -74,6 +81,7 @@ class Home extends Component {
         this.setState({
           checkDefault: false,
           checkRelation: false,
+          checkAddFeed: false,
           checkTypeFeeds: true,
           typeFeeds: data.feeds
         });
@@ -91,9 +99,36 @@ class Home extends Component {
         this.setState({
           checkDefault: false,
           checkTypeFeeds: false,
+          checkAddFeed: false,
           checkRelation: true,
           relation: data.relation
         });
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleAddFeedClick() {
+    this.setState({
+      checkDefault: false,
+      checkTypeFeeds: false,
+      checkAddFeed: true,
+      checkRelation: false
+    });
+  }
+
+  handleChange(event) {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
+  handleAddFeedSubmit() {
+    fetch(
+      `/api/addfeed?title=${this.state.addFeedTitle}&type=${this.state.addFeedType}&email=${this.state.userEmail}&body=${this.state.addFeedBody}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
       })
       .catch(err => console.error(err));
   }
@@ -135,7 +170,12 @@ class Home extends Component {
                 </button>
               </Row>
               <Row className="home-left-row">
-                <button className="home-button-green">Add Feed</button>
+                <button
+                  className="home-button-green"
+                  onClick={e => this.handleAddFeedClick(e)}
+                >
+                  Add Feed
+                </button>
               </Row>
               <Row className="home-left-row">
                 <p className="home-left-text">Relationship</p>
@@ -208,6 +248,38 @@ class Home extends Component {
               this.state.relation.map(relation => (
                 <RelationShowCase value={relation} key={relation.friend_id} />
               ))}
+            {this.state.checkAddFeed && (
+              <form onSubmit={this.handleAddFeedSubmit}>
+                <label>
+                  Title:
+                  <input
+                    type="text"
+                    name="addFeedTitle"
+                    value={this.state.addFeedTitle || ""}
+                    onChange={this.handleChange}
+                  ></input>
+                </label>
+                <label>
+                  Content:
+                  <input
+                    type="text"
+                    name="addFeedBody"
+                    value={this.state.addFeedBody || ""}
+                    onChange={this.handleChange}
+                  ></input>
+                </label>
+                <select
+                  name="addFeedType"
+                  value={this.state.addFeedType || ""}
+                  onChange={this.handleChange}
+                >
+                  <option value="AllFriends">All Friends</option>
+                  <option value="Block">The Whole Block</option>
+                  <option value="Hood">The Whole Hood</option>
+                </select>
+                <input type="submit" value="Submit" />
+              </form>
+            )}
           </Col>
         </Row>
       </Container>

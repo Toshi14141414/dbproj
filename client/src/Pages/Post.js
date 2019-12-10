@@ -9,8 +9,12 @@ class Post extends Component {
     super(props);
     this.state = {
       thread_id: this.props.location.state.thread_id,
+      isReply: false,
       reply: "",
-      user: this.props.location.state.user
+      user: this.props.location.state.user,
+      title: "",
+      start_time: "",
+      messages: []
     };
     this.handleReplyClick = this.handleReplyClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -19,10 +23,14 @@ class Post extends Component {
   componentDidMount() {
     const { threadID } = this.props.match.params;
     const subThreadID = threadID.substring(1);
-    console.log(subThreadID);
     fetch(`/api/post?thread=${subThreadID}`)
       .then(res => res.json())
       .then(data => {
+        this.setState({
+          title: data.thread.title,
+          start_time: data.thread.start_time,
+          messages: data.messages
+        });
         console.log(data);
       })
       .catch(err => console.error(err));
@@ -31,11 +39,12 @@ class Post extends Component {
   handleReplyClick() {
     console.log(this.state.reply);
     fetch(
-      `/api/reply/thread?=${this.state.thread_id}&user=${this.state.user}&reply=${this.state.reply}`
+      `/api/reply?thread=${this.state.thread_id}&user=${this.state.user}&reply=${this.state.reply}`
     )
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        this.setState({ messages: data.messages, reply: "" });
       })
       .catch(err => console.error(err));
   }
@@ -50,9 +59,11 @@ class Post extends Component {
     return (
       <Container>
         <Row>
-          <p>Title</p>
+          <p>{this.state.title}</p>
         </Row>
-        <PostDetail />
+        {this.state.messages.map(message => (
+          <PostDetail value={message} key={message.mid} />
+        ))}
         <input
           type="text"
           name="reply"
