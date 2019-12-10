@@ -10,6 +10,54 @@ const conn = mysql.createPool({
 
 let db = {};
 
+db.replyToThread = (thread, user, reply) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call replyToThread(?, ?, ?)`,
+      [thread, user, reply],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getMessageFromThread = (thread_id) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getMessageFromThread(?)`,
+      [thread_id],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.getThreadInfo = (thread_id) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call getThreadInfo(?)`,
+      [thread_id],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
 
 db.ListAllNeighbours = (email) =>{
   return new Promise((resolve, reject) => {
