@@ -36,7 +36,9 @@ class Home extends Component {
       checkAddFeed: false,
       addFeedTitle: "",
       addFeedBody: "",
-      addFeedType: "AllFriends"
+      addFeedType: "AllFriends",
+      checkNews: false,
+      news: []
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -44,6 +46,7 @@ class Home extends Component {
     this.handleAddFeedClick = this.handleAddFeedClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleAddFeedSubmit = this.handleAddFeedSubmit.bind(this);
+    this.handleNewsClick = this.handleNewsClick.bind(this);
   }
 
   componentDidMount() {
@@ -83,6 +86,7 @@ class Home extends Component {
           checkRelation: false,
           checkAddFeed: false,
           checkTypeFeeds: true,
+          checkNews: false,
           typeFeeds: data.feeds
         });
       })
@@ -101,6 +105,7 @@ class Home extends Component {
           checkTypeFeeds: false,
           checkAddFeed: false,
           checkRelation: true,
+          checkNews: false,
           relation: data.relation
         });
       })
@@ -112,7 +117,8 @@ class Home extends Component {
       checkDefault: false,
       checkTypeFeeds: false,
       checkAddFeed: true,
-      checkRelation: false
+      checkRelation: false,
+      checkNews: false
     });
   }
 
@@ -126,6 +132,23 @@ class Home extends Component {
     fetch(
       `/api/addfeed?title=${this.state.addFeedTitle}&type=${this.state.addFeedType}&email=${this.state.userEmail}&body=${this.state.addFeedBody}`
     )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleNewsClick() {
+    this.setState({
+      checkDefault: false,
+      checkTypeFeeds: false,
+      checkAddFeed: false,
+      checkRelation: false,
+      checkNews: true
+    });
+    console.log("trying to get news");
+    fetch(`/api/news?email=${this.state.userEmail}`)
       .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -151,8 +174,11 @@ class Home extends Component {
                 <button className="home-button-green">Edit Profile</button>
               </Row>
               <Row className="home-left-row">
-                <button className="home-button-green">
-                  News{"  "}{" "}
+                <button
+                  className="home-button-green"
+                  onClick={this.handleNewsClick}
+                >
+                  News
                   {this.state.hasUnreadMSG && (
                     <Envelope
                       width="1.2rem"
