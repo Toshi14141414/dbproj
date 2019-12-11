@@ -10,6 +10,8 @@ const conn = mysql.createPool({
 
 let db = {};
 
+
+
 db.StartMessageWith = (user, target, type, title, body) =>{
   return new Promise((resolve, reject) => {
     conn.query(
@@ -125,6 +127,22 @@ db.ListAllFriends = (email) =>{
   });
 };
 
+
+db.listAllNews = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call listAllNews(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
 
 db.getHoodFeeds = (email) =>{
   return new Promise((resolve, reject) => {

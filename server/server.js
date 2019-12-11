@@ -5,7 +5,7 @@ const home_info = require('./routes/home.js');
 const post_info = require('./routes/post');
 const reply = require('./routes/reply');
 const addfeed = require('./routes/addfeed');
-
+const news = require('./routes/news');
 const cors = require("cors");
 //const logger = require("morgan");
 
@@ -18,7 +18,7 @@ app.use('/api/register', register);
 app.use('/api/post', post_info);
 app.use('/api/reply', reply);
 app.use('/api/addfeed', addfeed);
-
+app.use('/api/news', news);
 // 1. express-validator // check if valid input fields
 // 2. json web token
 // token
