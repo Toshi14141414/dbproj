@@ -209,14 +209,16 @@ class Home extends Component {
               <Row>
                 <button
                   name="list_all_friends"
+                  className="home-button-green"
                   onClick={e => this.handleRelationClick(e)}
                 >
                   Friends
                 </button>
               </Row>
-              <Row>
+              <Row className="home-left-row">
                 <button
                   name="list_all_neighbors"
+                  className="home-button-green"
                   onClick={e => this.handleRelationClick(e)}
                 >
                   Neighbor
@@ -226,56 +228,87 @@ class Home extends Component {
                 <p className="home-left-text">Feeds</p>
               </Row>
               <Row>
-                <button name="All" onClick={e => this.handleFeedClick(e)}>
+                <button
+                  name="All"
+                  className="home-button-green"
+                  onClick={e => this.handleFeedClick(e)}
+                >
                   All
                 </button>
               </Row>
-              <Row>
-                <button name="Friend" onClick={e => this.handleFeedClick(e)}>
+              <Row className="home-left-row">
+                <button
+                  name="Friend"
+                  className="home-button-green"
+                  onClick={e => this.handleFeedClick(e)}
+                >
                   Friends
                 </button>
               </Row>
-              <Row>
-                <button name="Neighbor" onClick={e => this.handleFeedClick(e)}>
+              <Row className="home-left-row">
+                <button
+                  name="Neighbor"
+                  className="home-button-green"
+                  onClick={e => this.handleFeedClick(e)}
+                >
                   Neighbor
                 </button>
               </Row>
-              <Row>
-                <button name="Block" onClick={e => this.handleFeedClick(e)}>
+              <Row className="home-left-row">
+                <button
+                  name="Block"
+                  className="home-button-green"
+                  onClick={e => this.handleFeedClick(e)}
+                >
                   Block
                 </button>
               </Row>
-              <Row>
-                <button name="Hood" onClick={e => this.handleFeedClick(e)}>
+              <Row className="home-left-row">
+                <button
+                  name="Hood"
+                  className="home-button-green"
+                  onClick={e => this.handleFeedClick(e)}
+                >
                   Hood
                 </button>
               </Row>
+              <Row className="home-left-row"></Row>
+              <Row className="home-left-row"></Row>
+              <Row className="home-left-row"></Row>
             </Container>
           </Col>
-          <Col sm={9}>
-            <p>Feeds</p>
-            {this.state.checkDefault &&
-              this.state.feeds.map(feed => (
-                <FeedTitle
-                  value={feed}
-                  user={this.state.userEmail}
-                  key={feed.thread_id}
-                />
-              ))}
+          <Col sm={9} className="home-right">
+            {this.state.checkDefault && (
+              <div>
+                <p>All Feeds</p>
+                {this.state.feeds.map(feed => (
+                  <FeedTitle
+                    value={feed}
+                    user={this.state.userEmail}
+                    key={feed.thread_id}
+                  />
+                ))}
+              </div>
+            )}
             {this.state.checkTypeFeeds &&
               this.state.typeFeeds.map(feed => (
-                <FeedTitle
-                  value={feed}
-                  user={this.state.userEmail}
-                  key={feed.thread_id}
-                />
+                <Container>
+                  <FeedTitle
+                    value={feed}
+                    user={this.state.userEmail}
+                    key={feed.thread_id}
+                  />
+                </Container>
               ))}
             {this.state.checkRelation &&
               this.state.relation.map(relation => (
-                <RelationShowCase value={relation} key={relation.friend_id} />
+                <Container>
+                  <RelationShowCase value={relation} key={relation.friend_id} />
+                </Container>
               ))}
             {this.state.checkAddFeed && (
               <form onSubmit={this.handleAddFeedSubmit}>
+                <p>Add New Feed</p>
                 <label>
                   Title:
                   <input
