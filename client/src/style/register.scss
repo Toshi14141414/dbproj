@@ -1,0 +1,54 @@
+@import "./primary.scss";
+
+.register-form-div {
+  display: flex;
+  margin-top: 4%;
+  margin-left: 31%;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 0.3rem solid $primary-orange;
+  border-radius: 2rem;
+  height: 40rem;
+  width: 30rem;
+}
+
+.register-form {
+  justify-content: center;
+  align-items: center;
+  padding-left: 2.6rem;
+  padding-top: 1rem;
+}
+
+.register-text {
+  color: $primary-grey;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.register-input {
+  border: 1px solid $secondary-grey;
+}
+
+.register-row {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+}
+
+.register-button {
+  background-color: $primary-green;
+  border: 0.2rem solid $primary-green;
+  color: $white;
+  width: 6.7rem;
+  height: 2.2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+}
+
+.register-button-row {
+  margin-left: 7rem;
+  margin-top: 19.5rem;
+}
