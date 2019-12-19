@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Envelope, EnvelopeOpen } from "styled-icons/fa-regular";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 //img
 import default_user_img from "../default_img/default_user_icon.png";
@@ -43,7 +44,11 @@ class Home extends Component {
       addFeedType: "AllFriends",
       checkNews: false,
       friendNews: [],
-      blockNews: []
+      blockNews: [],
+      checkEditProfile: false,
+      isLeaveBlock: false,
+      editLatitude: null,
+      editLongitude: null
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -55,6 +60,10 @@ class Home extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleAddFeedSubmit = this.handleAddFeedSubmit.bind(this);
     this.handleNewsClick = this.handleNewsClick.bind(this);
+    this.handleEditProfileClick = this.handleEditProfileClick.bind(this);
+    this.handleLeaveBlock = this.handleLeaveBlock.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
+    this.handleEditBlock = this.handleEditBlock.bind(this);
   }
 
   componentDidMount() {
@@ -96,6 +105,7 @@ class Home extends Component {
           checkAddFeed: false,
           checkTypeFeeds: true,
           checkNews: false,
+          checkEditProfile: false,
           typeFeeds: data.feeds
         });
       })
@@ -116,6 +126,7 @@ class Home extends Component {
           checkFriendRelation: true,
           checkNeighborRelation: false,
           checkNews: false,
+          checkEditProfile: false,
           relation: data.relation
         });
       })
@@ -136,6 +147,7 @@ class Home extends Component {
           checkFriendRelation: false,
           checkNeighborRelation: true,
           checkNews: false,
+          checkEditProfile: false,
           relation: data.relation
         });
       })
@@ -149,6 +161,19 @@ class Home extends Component {
       checkAddFeed: true,
       checkFriendRelation: false,
       checkNeighborRelation: false,
+      checkEditProfile: false,
+      checkNews: false
+    });
+  }
+
+  handleEditProfileClick() {
+    this.setState({
+      checkDefault: false,
+      checkTypeFeeds: false,
+      checkAddFeed: false,
+      checkFriendRelation: false,
+      checkNeighborRelation: false,
+      checkEditProfile: true,
       checkNews: false
     });
   }
@@ -188,6 +213,30 @@ class Home extends Component {
       .catch(err => console.error(err));
   }
 
+  handleLeaveBlock() {
+    this.setState({ isLeaveBlock: true });
+  }
+
+  onMapClick = (props, marker, e) =>
+    this.setState({
+      editLatitude: e.latLng.lat(),
+      editLongitude: e.latLng.lng()
+    });
+
+  handleEditBlock() {
+    console.log(
+      this.state.userEmail + this.state.editLatitude + this.state.editLongitude
+    );
+    fetch(
+      `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.error(err));
+  }
+
   render() {
     return (
       <Container fluid className="home-page-container">
@@ -203,7 +252,12 @@ class Home extends Component {
                 </p>
               </Row>
               <Row>
-                <button className="home-button-green">Edit Profile</button>
+                <button
+                  className="home-button-green"
+                  onClick={this.handleEditProfileClick}
+                >
+                  Edit Profile
+                </button>
               </Row>
               <Row className="home-left-row">
                 <button
@@ -407,6 +461,54 @@ class Home extends Component {
                 </form>
               </Container>
             )}
+            {this.state.checkEditProfile && (
+              <Container fluid>
+                <p className="home-right-title">Edit your profile</p>
+
+                <Row className="add-feed-row">
+                  <p className="add-feed-label">APT:</p>
+                  <input
+                    type="text"
+                    className="edit-profile-input-title"
+                    name="apt"
+                    value={this.state.apt || ""}
+                    onChange={this.handleChange}
+                  ></input>
+                </Row>
+                <Row className="add-feed-row">
+                  <button
+                    onClick={this.handleLeaveBlock}
+                    className="edit-profile-leave-block"
+                  >
+                    Leave Block
+                  </button>
+                </Row>
+                {this.state.isLeaveBlock && (
+                  <div>
+                    <button onClick={this.handleEditBlock}>Submit</button>
+                    <Map
+                      google={this.props.google}
+                      zoom={14}
+                      initialCenter={{ lat: 40.690871, lng: -73.986116 }}
+                      style={{
+                        marginTop: "10px",
+                        marginLeft: "35px",
+                        width: "600px",
+                        height: "400px"
+                      }}
+                      onClick={this.onMapClick}
+                    >
+                      <Marker
+                        position={{
+                          lat: this.state.editLatitude,
+                          lng: this.state.editLongitude
+                        }}
+                      />
+                    </Map>
+                  </div>
+                )}
+              </Container>
+            )}
             {this.state.checkNews && (
               <div>
                 <p className="home-right-title">News</p>
@@ -437,4 +539,7 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const API = "AIzaSyDWSSP4kcgzwIbkBWqGcQZbXmWcYv3nFN0";
+export default GoogleApiWrapper({
+  apiKey: API
+})(Home);
