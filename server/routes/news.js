@@ -17,7 +17,6 @@ router.get("/", async (req, res, next) => {
     // var news_string = JSON.stringify(news_info);
     // var news_json = JSON.parse(news_string)[0];
 
-
     let friend_news = await db.listAllFriendRequests(email);
     var friend_new_string = JSON.stringify(friend_news);
     var friend_new_json = JSON.parse(friend_new_string)[0];
