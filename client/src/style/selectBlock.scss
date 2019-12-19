@@ -1,0 +1,13 @@
+@import "./primary.scss";
+
+.select-block-div {
+  display: flex;
+  margin-top: 4%;
+  margin-left: 31%;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 0.3rem solid $primary-orange;
+  border-radius: 2rem;
+  height: 40rem;
+  width: 30rem;
+}
