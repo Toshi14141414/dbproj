@@ -33,7 +33,7 @@ class NeighborShowCase extends Component {
   handleSendRelationMessage() {
     console.log(this.state.messageTitle + " " + this.state.messageContent);
     fetch(
-      `/api/send/neighbor/message?receiver=${this.state.receiver}&sender=${this.state.user}&title=${this.state.messageTitle}&content=${this.state.messageContent}`
+      `/api/send/neighbor/message?receiver=${this.state.receiver}&sender=${this.state.sender}&title=${this.state.messageTitle}&content=${this.state.messageContent}`
     )
       .then(res => res.json())
       .then(data => {
