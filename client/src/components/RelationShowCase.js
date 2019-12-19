@@ -6,6 +6,17 @@ import default_user_img from "../default_img/default_user_icon.png";
 import "../style/relationShowCase.scss";
 
 class RelationShowCase extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showEditor: false
+    };
+  }
+
+  handleSendMessage() {
+    this.setState({ showEditor: true });
+  }
+
   render() {
     return (
       <Container>
@@ -24,9 +35,15 @@ class RelationShowCase extends Component {
             <p>{this.props.descrip}</p>
           </Col>
           <Col sm={2}>
-            <button className="relaton-detail-button">Send Message</button>
+            <button
+              className="relaton-detail-button"
+              onClick={this.handleSendMessage}
+            >
+              Send Message
+            </button>
           </Col>
         </Row>
+        {this.state.handleSendMessage}
       </Container>
     );
   }

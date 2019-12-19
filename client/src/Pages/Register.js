@@ -70,7 +70,6 @@ class Register extends Component {
         if (!data.result) {
           alert("Register Failer, Please try another email");
         } else {
-          alert("blocks: " + data.suggested_blocks);
           this.props.history.push({
             pathname: `/selectBlock`,
             state: { user: this.state.email, blocks: data.suggested_blocks }

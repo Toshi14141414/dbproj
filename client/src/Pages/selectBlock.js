@@ -30,11 +30,12 @@ class selectBlock extends Component {
       <div className="select-block-div">
         <Container>
           <Row>
-            <p>Select your Block:</p>
+            <p className="select-block-text">Select your Block:</p>
           </Row>
           {this.state.blocks.map(block => (
             <Row>
               <button
+                className="select-block-button"
                 key={block.bid}
                 value={block.bid}
                 onClick={e => this.handleAddBlock(e)}
