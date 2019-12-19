@@ -11,6 +11,7 @@ import FeedTitle from "../components/FeedTitle";
 
 //style
 import "../style/home.scss";
+import NewsDetail from "../components/NewsDetail";
 
 class Home extends Component {
   constructor(props) {
@@ -152,6 +153,7 @@ class Home extends Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        this.setState({ news: data.news });
       })
       .catch(err => console.error(err));
   }
@@ -360,6 +362,16 @@ class Home extends Component {
                   </Row>
                 </form>
               </Container>
+            )}
+            {this.state.checkNews && (
+              <div>
+                <p className="home-right-title">News</p>
+                {this.state.news.map(newsText => (
+                  <Container>
+                    <NewsDetail value={newsText} />
+                  </Container>
+                ))}
+              </div>
             )}
           </Col>
         </Row>
