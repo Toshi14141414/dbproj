@@ -9,6 +9,35 @@ function jsonConcat(o1, o2) {
   return o1;
 }
 
+router.get("/block/back/", async (req, res, next) => {
+  const { user, sender,  target, time, type } = req.query;
+  console.log(user, sender, target, time, type);
+  
+  var req_time = "".concat(time.substring(0, 10),' ',time.substring(11, 19));
+  console.log(req_time);
+
+  try {
+    await db.respondToJoinBlock(user, sender, target, req_time, type);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+
+});
+
+router.get("/friend/back/", async (req, res, next) => {
+  const { user, sender, type } = req.query;
+  console.log(user, sender, type);
+
+  try {
+    await db.respondToFriendRequest(user, sender, type);
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(500);
+  }
+
+});
+
 router.get("/", async (req, res, next) => {
   const { email } = req.query;
   try {

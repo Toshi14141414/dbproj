@@ -8,7 +8,7 @@ router.get('/', async (req, res, next)=>{
     try{
 
         let results = await db.registerNewUser(email, firstName, lastName, sex, address, apt, city, state, zip, password);
-        //console.log("create user successfully");
+
         console.log(results);
         res.json(results);
         

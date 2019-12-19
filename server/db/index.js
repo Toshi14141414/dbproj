@@ -10,13 +10,44 @@ const conn = mysql.createPool({
 
 let db = {};
 
-
-
 db.StartMessageWith = (user, target, type, title, body) =>{
   return new Promise((resolve, reject) => {
     conn.query(
       `call StartMessageWith(?, ?, ?, ?, ?)`,
       [user, target, type, title, body],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.respondToFriendRequest = (respond_uid, request_uid, result) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call respondToFriendRequest(?, ?, ?)`,
+      [respond_uid, request_uid, result],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
+db.respondToJoinBlock = (user, req_uid, bid, time, result) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call respondToJoinBlock(?, ?, ?, ?, ?)`,
+      [user, req_uid, bid, time, result],
       (err, results) => {
         if (err) {
           return reject(err);
