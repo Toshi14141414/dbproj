@@ -30,7 +30,6 @@ router.get("/friend/back/", async (req, res, next) => {
   console.log(user, sender, type);
 
   try {
-
     await db.respondToFriendRequest(user, sender, type);
   } catch (e) {
     console.log(e);
