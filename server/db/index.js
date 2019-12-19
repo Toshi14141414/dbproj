@@ -368,6 +368,24 @@ db.validateUsers = (email, password) => {
   });
 };
 
+
+db.listNearBlocks = (email, lat, longt) => {
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call listNearBlocks(?, ?, ?)`,
+      [email, lat, longt],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
 db.registerNewUser = (email, firstName, lastName, gender, apt, lat, longt, password)=>{
     return new Promise((resolve, reject) => {
         conn.query(`call CreateAccount(?, ?, ?, ?, ?)`, [email, firstName, lastName, gender, password], (err_1, results_1) => {
