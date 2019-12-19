@@ -10,6 +10,22 @@ const conn = mysql.createPool({
 
 let db = {};
 
+db.SearchMessageWith = (user, keyword) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call SearchMessageWith(?, ?)`,
+      [user,keyword],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
 db.EnterAddress = (user, apt_info, lat, long) =>{
   return new Promise((resolve, reject) => {
     conn.query(
