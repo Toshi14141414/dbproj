@@ -23,7 +23,7 @@ class NewsDetail extends Component {
     return (
       <Container>
         <Row>
-          <Col sm={6}>somebody wants join block</Col>
+          <Col sm={6}>{this.props.value.title}</Col>
           <Col sm={3}>
             <button onClick={this.handleAcceptClick}>Accept</button>
           </Col>
