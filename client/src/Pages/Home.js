@@ -52,7 +52,8 @@ class Home extends Component {
       editblocks: [],
       isChoosingBlocks: false,
       newBlockID: null,
-      showLeaveBlockButton: true
+      showLeaveBlockButton: true,
+      search: null
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -70,6 +71,7 @@ class Home extends Component {
     this.handleEditBlock = this.handleEditBlock.bind(this);
     this.handleJoinNewBlock = this.handleJoinNewBlock.bind(this);
     this.handleJoinANewBlock = this.handleJoinANewBlock.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   componentDidMount() {
@@ -287,6 +289,18 @@ class Home extends Component {
     window.location.reload();
   }
 
+  handleSearch() {
+    console.log(this.state.search);
+    fetch(
+      `/api/search?email=${this.state.userEmail}&keyword=${this.state.search}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(err => console.error(err));
+  }
+
   render() {
     return (
       <Container fluid className="home-page-container">
@@ -300,6 +314,16 @@ class Home extends Component {
                 <p className="home-user-name">
                   {this.state.firstName} {this.state.lastName}
                 </p>
+              </Row>
+              <Row>
+                <input
+                  type="text"
+                  className="search-bar"
+                  name="search"
+                  value={this.state.search || ""}
+                  onChange={this.handleChange}
+                ></input>
+                <button onClick={this.handleSearch}>Search</button>
               </Row>
               <Row>
                 <button
@@ -548,7 +572,7 @@ class Home extends Component {
                         initialCenter={{ lat: 40.690871, lng: -73.986116 }}
                         style={{
                           marginTop: "10px",
-                          marginLeft: "35px",
+                          marginLeft: "20px",
                           width: "600px",
                           height: "400px"
                         }}
