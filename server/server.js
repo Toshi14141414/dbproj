@@ -7,7 +7,6 @@ const reply = require('./routes/reply');
 const addfeed = require('./routes/addfeed');
 const news = require('./routes/news');
 const cors = require("cors");
-//const logger = require("morgan");
 
 const app = express();
 app.use(express.json());
