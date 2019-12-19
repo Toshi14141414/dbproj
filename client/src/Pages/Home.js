@@ -48,7 +48,9 @@ class Home extends Component {
       checkEditProfile: false,
       isLeaveBlock: false,
       editLatitude: null,
-      editLongitude: null
+      editLongitude: null,
+      editblocks: [],
+      isChoosingBlocks: false
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -224,15 +226,17 @@ class Home extends Component {
     });
 
   handleEditBlock() {
-    console.log(
-      this.state.userEmail + this.state.editLatitude + this.state.editLongitude
-    );
     fetch(
-      `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}`
+      `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}&bid=${this.state.bid}&apt=${this.state.apt}`
     )
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        this.setState({
+          editblocks: data,
+          isChoosingBlocks: true,
+          isLeaveBlock: false
+        });
       })
       .catch(err => console.error(err));
   }
@@ -484,6 +488,32 @@ class Home extends Component {
                   </button>
                 </Row>
                 {this.state.isLeaveBlock && (
+                  <div>
+                    <button onClick={this.handleEditBlock} className="edit-profile-submit-button">
+                      Submit
+                    </button>
+                    <Map
+                      google={this.props.google}
+                      zoom={14}
+                      initialCenter={{ lat: 40.690871, lng: -73.986116 }}
+                      style={{
+                        marginTop: "10px",
+                        marginLeft: "35px",
+                        width: "600px",
+                        height: "400px"
+                      }}
+                      onClick={this.onMapClick}
+                    >
+                      <Marker
+                        position={{
+                          lat: this.state.editLatitude,
+                          lng: this.state.editLongitude
+                        }}
+                      />
+                    </Map>
+                  </div>
+                )}
+                {this.state.isChoosingBlocks && (
                   <div>
                     <button onClick={this.handleEditBlock}>Submit</button>
                     <Map
