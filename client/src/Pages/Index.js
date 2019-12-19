@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
 //style
@@ -55,38 +55,56 @@ class Index extends Component {
 
   render() {
     return (
-      <div className="login-form">
-        <Container>
+      <div className="login-form-div">
+        <Container className="login-form">
           <form onSubmit={this.handleSubmit}>
             <Row>
               <label>
-                Email:
-                <input
-                  type="text"
-                  name="email"
-                  className="login-email"
-                  value={this.state.email || ""}
-                  onChange={this.handleChange}
-                ></input>
+                <Col sm={3}>
+                  <span className="login-text">Email:</span>
+                </Col>
+                <Col sm={6}>
+                  <input
+                    type="text"
+                    name="email"
+                    className="login-input"
+                    value={this.state.email || ""}
+                    onChange={this.handleChange}
+                  ></input>
+                </Col>
               </label>
             </Row>
             <Row>
               <label>
-                Password:
-                <input
-                  type="text"
-                  name="password"
-                  className="login-password"
-                  value={this.state.password || ""}
-                  onChange={this.handleChange}
-                ></input>
+                <Col sm={3}>
+                  <span className="login-text">Password:</span>
+                </Col>
+                <Col sm={9}>
+                  <input
+                    type="text"
+                    name="password"
+                    className="login-input"
+                    value={this.state.password || ""}
+                    onChange={this.handleChange}
+                  ></input>
+                </Col>
               </label>
             </Row>
+            <Row className="blank-row"></Row>
             <Row>
-              <input type="submit" value="Sign In" />
+              <Col sm={6}>
+                <input type="submit" value="Sign In" className="login-button" />
+              </Col>
+              <Col sm={6}>
+                <button
+                  onClick={this.handleRegisterClick}
+                  className="login-button"
+                >
+                  Register
+                </button>
+              </Col>
             </Row>
           </form>
-          <button onClick={this.handleRegisterClick}>Register</button>
         </Container>
       </div>
     );

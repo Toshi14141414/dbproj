@@ -1,8 +1,49 @@
 @import "./primary.scss";
 
+.login-form-div {
+  display: flex;
+  margin-top: 20%;
+  margin-left: 35%;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 0.3rem solid $primary-orange;
+  border-radius: 2rem;
+  height: 20rem;
+  width: 24rem;
+}
+
 .login-form {
-  background-color: $primary-grey;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.login-text {
+  color: $primary-grey;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.login-input {
+  border: 0.1rem solid $primary-green;
+  width: 15.8rem;
+  height: 2.3rem;
+}
+
+.login-button {
+  background-color: $primary-green;
+  border: 0.2rem solid $primary-green;
+  color: $white;
+  width: 6.7rem;
+  height: 2.2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+}
+
+.blank-row {
+  padding-top: 1rem;
 }

@@ -1,0 +1,62 @@
+@import "./primary.scss";
+
+.post-container {
+  background-color: $white;
+  height: 200rem;
+}
+
+.post-title {
+  padding-top: 3rem;
+  padding-left: 5rem;
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: $primary-grey;
+}
+
+.post-detail-container {
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.post-detail-text {
+  font-size: 1.2rem;
+  color: $primary-grey;
+}
+
+.post-detail-time {
+  font-size: 0.9rem;
+  color: $secondary-grey;
+}
+
+.post-reply-row {
+  padding-left: 5rem;
+}
+
+.post-input {
+  padding-top: 2rem;
+}
+
+.post-reply-input {
+  height: 6rem;
+  width: 60rem;
+  border: 2px solid $secondary-grey;
+}
+
+.post-button {
+  padding-top: 0.3rem;
+}
+
+.post-reply-button {
+  background-color: $primary-green;
+  border: 0.2rem solid $primary-green;
+  color: $white;
+  width: 6.7rem;
+  height: 2.2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+}

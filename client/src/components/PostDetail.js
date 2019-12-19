@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
+import "../style/post.scss";
+
 export class PostDetail extends Component {
   render() {
     return (
-      <Container>
+      <Container className="post-detail-container">
         <Row>
           <Col>
-            <p>{this.props.value.body}</p>
+            <p className="post-detail-text">{this.props.value.body}</p>
           </Col>
         </Row>
         <Row>
-          <Col sm={3}>
-            <p>
+          <Col sm={2}>
+            <p className="post-detail-time">
               {this.props.value.fname} {this.props.value.lname}
             </p>
           </Col>
           <Col sm={9}>
-            <p>
+            <p className="post-detail-time">
               {this.props.value.send_time.substring(0, 10)}{" "}
               {this.props.value.send_time.substring(11, 19)}
             </p>

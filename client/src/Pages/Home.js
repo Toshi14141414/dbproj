@@ -280,7 +280,7 @@ class Home extends Component {
           <Col sm={9} className="home-right">
             {this.state.checkDefault && (
               <div>
-                <p>All Feeds</p>
+                <p className="home-right-title">All Feeds</p>
                 {this.state.feeds.map(feed => (
                   <FeedTitle
                     value={feed}
@@ -290,16 +290,20 @@ class Home extends Component {
                 ))}
               </div>
             )}
-            {this.state.checkTypeFeeds &&
-              this.state.typeFeeds.map(feed => (
-                <Container>
-                  <FeedTitle
-                    value={feed}
-                    user={this.state.userEmail}
-                    key={feed.thread_id}
-                  />
-                </Container>
-              ))}
+            {this.state.checkTypeFeeds && (
+              <div>
+                <p className="home-right-title">Feeds</p>
+                {this.state.typeFeeds.map(feed => (
+                  <Container>
+                    <FeedTitle
+                      value={feed}
+                      user={this.state.userEmail}
+                      key={feed.thread_id}
+                    />
+                  </Container>
+                ))}
+              </div>
+            )}
             {this.state.checkRelation &&
               this.state.relation.map(relation => (
                 <Container>
@@ -307,37 +311,55 @@ class Home extends Component {
                 </Container>
               ))}
             {this.state.checkAddFeed && (
-              <form onSubmit={this.handleAddFeedSubmit}>
-                <p>Add New Feed</p>
-                <label>
-                  Title:
-                  <input
-                    type="text"
-                    name="addFeedTitle"
-                    value={this.state.addFeedTitle || ""}
-                    onChange={this.handleChange}
-                  ></input>
-                </label>
-                <label>
-                  Content:
-                  <input
-                    type="text"
-                    name="addFeedBody"
-                    value={this.state.addFeedBody || ""}
-                    onChange={this.handleChange}
-                  ></input>
-                </label>
-                <select
-                  name="addFeedType"
-                  value={this.state.addFeedType || ""}
-                  onChange={this.handleChange}
-                >
-                  <option value="AllFriends">All Friends</option>
-                  <option value="Block">The Whole Block</option>
-                  <option value="Hood">The Whole Hood</option>
-                </select>
-                <input type="submit" value="Submit" />
-              </form>
+              <Container fluid>
+                <form onSubmit={this.handleAddFeedSubmit}>
+                  <p className="home-right-title">Add New Feed</p>
+
+                  <Row className="add-feed-row">
+                    <p className="add-feed-label">Title:</p>
+                  </Row>
+                  <Row className="add-feed-row">
+                    <input
+                      type="text"
+                      className="add-feed-input-title"
+                      name="addFeedTitle"
+                      value={this.state.addFeedTitle || ""}
+                      onChange={this.handleChange}
+                    ></input>
+                  </Row>
+                  <Row className="add-feed-row">
+                    <p className="add-feed-label">Content:</p>
+                  </Row>
+                  <Row className="add-feed-row">
+                    <input
+                      type="text"
+                      name="addFeedBody"
+                      className="add-feed-input-content"
+                      value={this.state.addFeedBody || ""}
+                      onChange={this.handleChange}
+                    ></input>
+                  </Row>
+                  <Row className="add-feed-row">
+                    <select
+                      name="addFeedType"
+                      className="add-feed-input-select"
+                      value={this.state.addFeedType || ""}
+                      onChange={this.handleChange}
+                    >
+                      <option value="AllFriends">All Friends</option>
+                      <option value="Block">The Whole Block</option>
+                      <option value="Hood">The Whole Hood</option>
+                    </select>
+                  </Row>
+                  <Row className="add-feed-row">
+                    <input
+                      className="home-button-green"
+                      type="submit"
+                      value="Submit"
+                    />
+                  </Row>
+                </form>
+              </Container>
             )}
           </Col>
         </Row>

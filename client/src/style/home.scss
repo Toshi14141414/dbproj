@@ -50,4 +50,40 @@
 
 .home-right {
   padding-top: 3rem;
+  background-color: $white;
+}
+
+.home-right-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: $primary-grey;
+  padding-left: 1.8rem;
+}
+
+.add-feed-label {
+  font-size: 1.2rem;
+  color: $primary-grey;
+
+  padding-top: 1rem;
+}
+
+.add-feed-input-title {
+  height: 2rem;
+  width: 45rem;
+  border: 1px solid $secondary-grey;
+}
+
+.add-feed-input-content {
+  height: 6rem;
+  width: 45rem;
+  border: 1px solid $secondary-grey;
+}
+
+.add-feed-row {
+  padding-left: 2rem;
+}
+
+.add-feed-input-select {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }

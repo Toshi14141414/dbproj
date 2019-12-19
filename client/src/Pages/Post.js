@@ -4,6 +4,8 @@ import { Container, Row, Col } from "react-bootstrap";
 //Customer Components
 import { PostDetail } from "../components/PostDetail";
 
+import "../style/post.scss";
+
 class Post extends Component {
   constructor(props) {
     super(props);
@@ -57,20 +59,27 @@ class Post extends Component {
 
   render() {
     return (
-      <Container>
+      <Container fluid className="post-container">
         <Row>
-          <p>{this.state.title}</p>
+          <p className="post-title">{this.state.title}</p>
         </Row>
         {this.state.messages.map(message => (
           <PostDetail value={message} key={message.mid} />
         ))}
-        <input
-          type="text"
-          name="reply"
-          value={this.state.reply || ""}
-          onChange={e => this.handleChange(e)}
-        />
-        <button onClick={this.handleReplyClick}>Reply</button>
+        <Row className="post-reply-row post-input">
+          <input
+            type="text"
+            className="post-reply-input"
+            name="reply"
+            value={this.state.reply || ""}
+            onChange={e => this.handleChange(e)}
+          />
+        </Row>
+        <Row className="post-reply-row post-button">
+          <button className="post-reply-button" onClick={this.handleReplyClick}>
+            Reply
+          </button>
+        </Row>
       </Container>
     );
   }
