@@ -59,6 +59,22 @@ db.respondToJoinBlock = (user, req_uid, bid, time, result) =>{
   });
 };
 
+db.JoinBlock = (user, target_block) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call JoinBlock(?, ?)`,
+      [user, target_block],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
 db.StartMessageIn = (user, type, title, body) =>{
   return new Promise((resolve, reject) => {
     conn.query(
