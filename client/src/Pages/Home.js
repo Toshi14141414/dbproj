@@ -8,10 +8,11 @@ import default_user_img from "../default_img/default_user_icon.png";
 //Customer Components
 import RelationShowCase from "../components/RelationShowCase";
 import FeedTitle from "../components/FeedTitle";
+import BlockNewsDetail from "../components/BlockNewsDetail";
+import NewsDetail from "../components/NewsDetail";
 
 //style
 import "../style/home.scss";
-import NewsDetail from "../components/NewsDetail";
 
 class Home extends Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class Home extends Component {
       addFeedBody: "",
       addFeedType: "AllFriends",
       checkNews: false,
-      news: []
+      friendNews: [],
+      blockNews: []
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -153,7 +155,7 @@ class Home extends Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        this.setState({ news: data.news });
+        this.setState({ friendNews: data.friend, blockNews: data.block });
       })
       .catch(err => console.error(err));
   }
@@ -366,9 +368,22 @@ class Home extends Component {
             {this.state.checkNews && (
               <div>
                 <p className="home-right-title">News</p>
-                {this.state.news.map(newsText => (
+                {this.state.friendNews.map(news => (
                   <Container>
-                    <NewsDetail value={newsText} />
+                    <NewsDetail
+                      key={news.thread_id}
+                      value={news}
+                      userEmail={this.state.userEmail}
+                    />
+                  </Container>
+                ))}
+                {this.state.blockNews.map(news => (
+                  <Container>
+                    <BlockNewsDetail
+                      key={news.thread_id}
+                      value={news}
+                      userEmail={this.state.userEmail}
+                    />
                   </Container>
                 ))}
               </div>
