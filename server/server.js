@@ -10,6 +10,7 @@ const selectBlock = require('./routes/selectBlock');
 const sendMessage = require('./routes/sendMessage');
 const editProfile = require('./routes/editProfile');
 const search = require('./routes/search');
+const friend = require('./routes/friend');
 const cors = require("cors");
 
 const app = express();
@@ -26,22 +27,9 @@ app.use('/api/join/block', selectBlock);
 app.use('/api/send', sendMessage);
 app.use('/api/edit/', editProfile);
 app.use('/api/search', search);
+app.use('/api/add/friend', friend);
 
-// 1. express-validator // check if valid input fields
-// 2. json web token
-// token
-// localStorage
 
 const port = 5000;
 app.listen(port, () => console.log(`Server started on port ${port}`));
 
-// app.use(
-//     cors({
-//       origin: 'http://localhost:3000',
-//       credentials: true,
-//     })
-//   );
-
-//   app.use(logger('dev'));
-//   app.use(express.json());
-//   app.use(express.urlencoded({ extended: false }));

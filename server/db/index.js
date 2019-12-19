@@ -10,6 +10,37 @@ const conn = mysql.createPool({
 
 let db = {};
 
+db.sendFriendRequest = (sender, receiver) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call sendFriendRequest(?, ?)`,
+      [sender,receiver],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.isFriend = (user, receiver) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `SELECT isFriend(?, ?) AS result`,
+      [user,receiver],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
 db.SearchMessageWith = (user, keyword) =>{
   return new Promise((resolve, reject) => {
     conn.query(
