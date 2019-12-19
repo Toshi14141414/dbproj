@@ -323,8 +323,14 @@ class Home extends Component {
                   value={this.state.search || ""}
                   onChange={this.handleChange}
                 ></input>
-                <button onClick={this.handleSearch}>Search</button>
+                <button
+                  onClick={this.handleSearch}
+                  className="home-button-green"
+                >
+                  Search
+                </button>
               </Row>
+              <Row className="home-left-row"></Row>
               <Row>
                 <button
                   className="home-button-green"
