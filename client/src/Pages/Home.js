@@ -51,7 +51,8 @@ class Home extends Component {
       editLongitude: null,
       editblocks: [],
       isChoosingBlocks: false,
-      newBlockID: null
+      newBlockID: null,
+      showLeaveBlockButton: true
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -68,6 +69,7 @@ class Home extends Component {
     this.onMapClick = this.onMapClick.bind(this);
     this.handleEditBlock = this.handleEditBlock.bind(this);
     this.handleJoinNewBlock = this.handleJoinNewBlock.bind(this);
+    this.handleJoinANewBlock = this.handleJoinANewBlock.bind(this);
   }
 
   componentDidMount() {
@@ -204,7 +206,9 @@ class Home extends Component {
       checkDefault: false,
       checkTypeFeeds: false,
       checkAddFeed: false,
-      checkRelation: false,
+      checkFriendRelation: false,
+      checkNeighborRelation: false,
+      checkEditProfile: false,
       checkNews: true
     });
     console.log("trying to get news");
@@ -228,7 +232,12 @@ class Home extends Component {
     });
 
   handleEditBlock() {
-    this.setState({ isChoosingBlocks: true, isLeaveBlock: false });
+    this.setState({
+      isChoosingBlocks: true,
+      isLeaveBlock: false,
+      showLeaveBlockButton: false
+    });
+    console.log("sending location");
     fetch(
       `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}&bid=${this.state.bid}&apt=${this.state.apt}`
     )
@@ -236,25 +245,46 @@ class Home extends Component {
       .then(data => {
         console.log(data);
         this.setState({
-          editblocks: data
+          editblocks: data.suggested_blocks
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleJoinANewBlock() {
+    this.setState({
+      isChoosingBlocks: true,
+      isLeaveBlock: false,
+      showLeaveBlockButton: false
+    });
+    console.log("user without a block sending location");
+    fetch(
+      `/api/edit/newblock?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          editblocks: data.suggested_blocks
         });
       })
       .catch(err => console.error(err));
   }
 
   handleJoinNewBlock(e) {
-    this.setState({ newBlockID: e.target.value.bid });
-    fetch(
-      `/api/join/new/block?email=${this.state.userEmail}&bid=${this.state.bid}`
-    )
+    const newBlockID = e.target.value;
+    console.log(this.state.userEmail + newBlockID);
+    fetch(`/api/join/block?email=${this.state.userEmail}&block=${newBlockID}`)
       .then(res => res.json())
       .then(data => {
         console.log(data);
         this.setState({
-          editblocks: data
+          bid: newBlockID
         });
+        alert("You've join a new block!");
       })
       .catch(err => console.error(err));
+    window.location.reload();
   }
 
   render() {
@@ -496,12 +526,43 @@ class Home extends Component {
                   ></input>
                 </Row>
                 <Row className="add-feed-row">
-                  <button
-                    onClick={this.handleLeaveBlock}
-                    className="edit-profile-leave-block"
-                  >
-                    Leave Block
-                  </button>
+                  {this.state.bid > 0 && this.state.showLeaveBlockButton && (
+                    <button
+                      onClick={this.handleLeaveBlock}
+                      className="edit-profile-leave-block"
+                    >
+                      Leave Block
+                    </button>
+                  )}
+                  {this.state.bid < 0 && !this.state.isChoosingBlocks && (
+                    <div>
+                      <button
+                        onClick={this.handleJoinANewBlock}
+                        className="edit-profile-submit-button"
+                      >
+                        Join a Block
+                      </button>
+                      <Map
+                        google={this.props.google}
+                        zoom={14}
+                        initialCenter={{ lat: 40.690871, lng: -73.986116 }}
+                        style={{
+                          marginTop: "10px",
+                          marginLeft: "35px",
+                          width: "600px",
+                          height: "400px"
+                        }}
+                        onClick={this.onMapClick}
+                      >
+                        <Marker
+                          position={{
+                            lat: this.state.editLatitude,
+                            lng: this.state.editLongitude
+                          }}
+                        />
+                      </Map>
+                    </div>
+                  )}
                 </Row>
                 {this.state.isLeaveBlock && (
                   <div>
@@ -534,7 +595,15 @@ class Home extends Component {
                 )}
                 {this.state.isChoosingBlocks && (
                   <div>
-                    <button onClick={this.handleJoinNewBlock}>Blocks</button>
+                    {this.state.editblocks.map(block => (
+                      <button
+                        onClick={this.handleJoinNewBlock}
+                        value={block.bid}
+                        className="edit-profile-submit-button"
+                      >
+                        {block.bname}
+                      </button>
+                    ))}
                   </div>
                 )}
               </Container>
