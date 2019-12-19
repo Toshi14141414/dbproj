@@ -40,6 +40,7 @@ class NeighborShowCase extends Component {
         console.log(data);
       })
       .catch(err => console.error(err));
+    window.location.reload();
   }
 
   render() {

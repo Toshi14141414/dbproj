@@ -14,7 +14,6 @@
   background-color: $primary-green;
   border: 0.2rem solid $primary-green;
   color: $white;
-  width: 6.7rem;
   height: 2.2rem;
   text-align: center;
   text-decoration: none;
@@ -22,5 +21,40 @@
   font-size: 1rem;
   font-weight: bold;
   border-radius: 0.5rem;
+  white-space: nowrap;
+  margin-top: 0.8rem;
+}
+
+.message-label {
+  font-size: 1.2rem;
+  color: $primary-grey;
+}
+
+.message-input-title {
+  width: 30rem;
+  height: 2rem;
+  margin-left: 1rem;
+  border: 1px solid $primary-grey;
+}
+
+.message-input-content {
+  width: 30rem;
+  height: 4rem;
+  margin-left: 1rem;
+  border: 1px solid $primary-grey;
+}
+
+.message-send {
+  background-color: $primary-green;
+  border: 0.2rem solid $primary-green;
+  color: $white;
+  height: 2.2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  white-space: nowrap;
   margin-top: 0.8rem;
 }

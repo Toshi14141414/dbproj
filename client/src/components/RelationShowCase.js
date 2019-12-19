@@ -40,6 +40,7 @@ class RelationShowCase extends Component {
         console.log(data);
       })
       .catch(err => console.error(err));
+    window.location.reload();
   }
 
   render() {
@@ -71,7 +72,7 @@ class RelationShowCase extends Component {
         {this.state.showEditor && (
           <Container>
             <Row>
-              <p className="message-label">Title:</p>
+              <p className="message-label">Title: </p>
               <input
                 type="text"
                 className="message-input-title"
@@ -81,7 +82,7 @@ class RelationShowCase extends Component {
               ></input>
             </Row>
             <Row>
-              <p className="add-feed-label">Content:</p>
+              <p className="message-label">Content: </p>
               <input
                 type="text"
                 className="message-input-content"
@@ -91,7 +92,12 @@ class RelationShowCase extends Component {
               ></input>
             </Row>
             <Row>
-              <button onClick={this.handleSendRelationMessage}>Send</button>
+              <button
+                onClick={this.handleSendRelationMessage}
+                className="message-send"
+              >
+                Send
+              </button>
             </Row>
           </Container>
         )}
