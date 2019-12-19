@@ -10,18 +10,21 @@ class RelationShowCase extends Component {
     return (
       <Container>
         <Row>
-          <Col sm={4}>
+          <Col sm={2}>
             <img
               src={default_user_img}
               alt="img"
               className="user-showcase-img"
             />
           </Col>
-          <Col sm={8}>
-            <p>
+          <Col sm={6}>
+            <p className="relaton-detail-name">
               {this.props.value.fname} {this.props.value.lname}
             </p>
             <p>{this.props.descrip}</p>
+          </Col>
+          <Col sm={2}>
+            <button className="relaton-detail-button">Send Message</button>
           </Col>
         </Row>
       </Container>

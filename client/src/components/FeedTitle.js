@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 
+import "../style/feedTitle.scss";
+
 class FeedTitle extends Component {
   constructor(props) {
     super(props);
@@ -24,17 +26,19 @@ class FeedTitle extends Component {
       <Container>
         <Row>
           <Col sm={6}>
-            <button onClick={this.handleGoPost}>
+            <button onClick={this.handleGoPost} className="feed-title">
               {this.props.value.title}
             </button>
           </Col>
           <Col sm={2}>
-            <p>
+            <p className="feed-author">
               {this.props.value.fname} {this.props.value.lname}
             </p>
           </Col>
           <Col sm={4}>
-            <p>{this.props.value.start_date.substring(0, 10)}</p>
+            <p className="feed-time">
+              {this.props.value.start_date.substring(0, 10)}
+            </p>
           </Col>
         </Row>
       </Container>

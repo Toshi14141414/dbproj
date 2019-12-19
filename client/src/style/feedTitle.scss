@@ -1,0 +1,32 @@
+@import "./primary";
+
+.feed-title {
+  color: $primary-grey;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: normal;
+  border: none;
+}
+
+.feed-title:hover {
+  color: $primary-green;
+  text-decoration: underline;
+}
+
+.feed-title-container {
+  padding-left: 1.6rem;
+  padding-top: 0.3rem;
+}
+
+.feed-author {
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: $primary-grey;
+}
+
+.feed-time {
+  font-size: 1.3rem;
+  font-weight: normal;
+  color: $primary-grey;
+}
