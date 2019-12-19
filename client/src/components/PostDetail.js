@@ -24,7 +24,7 @@ export class PostDetail extends Component {
   handleAddFriend() {
     console.log(this.state.user + " " + this.state.sender);
     fetch(
-      `/api/add/friend?user=${this.state.user}&reveiver=${this.state.sender}`
+      `/api/add/friend?user=${this.state.user}&receiver=${this.state.sender}`
     )
       .then(res => res.json())
       .then(data => {
@@ -49,14 +49,19 @@ export class PostDetail extends Component {
               overlay={
                 <Popover id={`popover-positioned-top`}>
                   <Popover.Content>
-                    <button onClick={this.handleAddFriend}>Add Friend</button>
+                    <button
+                      className="post-reply-button"
+                      onClick={this.handleAddFriend}
+                    >
+                      Add Friend
+                    </button>
                   </Popover.Content>
                 </Popover>
               }
             >
-              <Button variant="secondary">
+              <button className="post-detail-name">
                 {this.props.value.fname} {this.props.value.lname}
-              </Button>
+              </button>
             </OverlayTrigger>
           </Col>
           <Col sm={9}>
