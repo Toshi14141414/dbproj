@@ -164,7 +164,7 @@ class Register extends Component {
             </Col>
             <Col sm={8}>
               <input
-                type="text"
+                type="password"
                 name="password"
                 className="register-input"
                 value={this.state.password || ""}

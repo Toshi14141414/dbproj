@@ -16,7 +16,8 @@ export class PostDetail extends Component {
     super(props);
     this.state = {
       sender: this.props.value.email,
-      user: this.props.user
+      user: this.props.user,
+      result: ""
     };
     this.handleAddFriend = this.handleAddFriend.bind(this);
   }
@@ -29,6 +30,13 @@ export class PostDetail extends Component {
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        if (data[0].result < 0) {
+          alert("You cannot add youself as friend.");
+        } else if (data[0].result > 0) {
+          alert("You've already sent friend request");
+        } else {
+          alert("You've already friend");
+        }
       })
       .catch(err => console.error(err));
   }

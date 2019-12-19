@@ -81,7 +81,7 @@ class Index extends Component {
                 </Col>
                 <Col sm={9}>
                   <input
-                    type="text"
+                    type="password"
                     name="password"
                     className="login-input"
                     value={this.state.password || ""}
