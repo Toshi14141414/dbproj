@@ -94,6 +94,39 @@ db.getThreadInfo = (thread_id) =>{
 };
 
 
+db.listAllFriendRequests = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call listAllFriendRequests(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.listAllBlockRequests = (email) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call listAllBlockRequests(?)`,
+      [email],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
+
 db.ListAllNeighbours = (email) =>{
   return new Promise((resolve, reject) => {
     conn.query(
