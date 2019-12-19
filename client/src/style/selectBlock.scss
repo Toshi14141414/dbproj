@@ -11,3 +11,26 @@
   height: 25rem;
   width: 30rem;
 }
+
+.select-block-text {
+  padding-left: 4rem;
+  padding-top: 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: $primary-grey;
+}
+
+.select-block-button {
+  background-color: $primary-green;
+  border: 0.2rem solid $primary-green;
+  color: $white;
+  height: 2.2rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  margin-left: 4rem;
+  margin-bottom: 0.8rem;
+}

@@ -8,7 +8,8 @@ class BlockNewsDetail extends Component {
       userEmail: this.props.userEmail,
       senderEmail: this.props.value.sender_id,
       targetBid: this.props.value.target_bid,
-      time: this.props.value.start_time
+      time: this.props.value.start_time,
+      isReply: true
     };
     this.handleAcceptClick = this.handleAcceptClick.bind(this);
     this.handleDeclineClick = this.handleDeclineClick.bind(this);
@@ -16,6 +17,7 @@ class BlockNewsDetail extends Component {
 
   handleAcceptClick() {
     console.log("block accept");
+    this.setState({ isReply: false });
     fetch(
       `/api/news/block/back?sender=${this.state.senderEmail}&user=${this.state.userEmail}&type=APPROVE&target=${this.state.targetBid}&time=${this.state.time}`
     )
@@ -28,6 +30,7 @@ class BlockNewsDetail extends Component {
 
   handleDeclineClick() {
     console.log("block decline");
+    this.setState({ isReply: false });
     fetch(
       `/api/news/block/back?sender=${this.state.senderEmail}&user=${this.state.userEmail}&type=REJECT&target=${this.state.targetBid}&time=${this.state.time}`
     )
@@ -41,21 +44,31 @@ class BlockNewsDetail extends Component {
   render() {
     return (
       <Container className="news-container">
-        <Row>
-          <Col sm={6}>
-            <p className="news-title">{this.props.value.title}</p>
-          </Col>
-          <Col sm={3}>
-            <button className="news-button" onClick={this.handleAcceptClick}>
-              Accept
-            </button>
-          </Col>
-          <Col sm={3}>
-            <button className="news-button" onClick={this.handleDeclineClick}>
-              Decline
-            </button>
-          </Col>
-        </Row>
+        {this.state.isReply && (
+          <div>
+            <Row>
+              <Col sm={6}>
+                <p className="news-title">{this.props.value.title}</p>
+              </Col>
+              <Col sm={3}>
+                <button
+                  className="news-button"
+                  onClick={this.handleAcceptClick}
+                >
+                  Accept
+                </button>
+              </Col>
+              <Col sm={3}>
+                <button
+                  className="news-button"
+                  onClick={this.handleDeclineClick}
+                >
+                  Decline
+                </button>
+              </Col>
+            </Row>
+          </div>
+        )}
       </Container>
     );
   }
