@@ -3,12 +3,11 @@ const db = require('../db');
 const router  = express.Router();
 
 router.get('/', async (req, res, next)=>{
+    console.log('here');
     console.log(req.query);
-    const {email, firstName, lastName, address,sex, apt, city, state, zip, password } = req.query;
+    const {email, firstName, lastName, sex, latitude, longitude,password } = req.query;
     try{
-
-        let results = await db.registerNewUser(email, firstName, lastName, sex, address, apt, city, state, zip, password);
-
+        let results = await db.registerNewUser(email, firstName, lastName, sex, "", latitude, longitude, password);
         console.log(results);
         res.json(results);
         

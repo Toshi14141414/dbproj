@@ -368,7 +368,7 @@ db.validateUsers = (email, password) => {
   });
 };
 
-db.registerNewUser = (email, firstName, lastName, gender,address, apt, city, state, zip, password)=>{
+db.registerNewUser = (email, firstName, lastName, gender, apt, lat, longt, password)=>{
     return new Promise((resolve, reject) => {
         conn.query(`call CreateAccount(?, ?, ?, ?, ?)`, [email, firstName, lastName, gender, password], (err_1, results_1) => {
             if (err_1) {
@@ -376,7 +376,7 @@ db.registerNewUser = (email, firstName, lastName, gender,address, apt, city, sta
               return resolve(return_result);
             }
             else{
-                conn.query(`call EnterAddress(?, ?, ?, ?, ?)`, [email, apt, address, city, state ], (err_2, results_2)=>{
+                conn.query(`call EnterAddress(?, ?, ?, ?)`, [email, apt, lat, longt], (err_2, results_2)=>{
                       if (err_2){
 
                           const return_result= {result: 0};
