@@ -5,7 +5,7 @@ import default_user_img from "../default_img/default_user_icon.png";
 //style
 import "../style/relationShowCase.scss";
 
-class RelationShowCase extends Component {
+class NeighborShowCase extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,7 +33,7 @@ class RelationShowCase extends Component {
   handleSendRelationMessage() {
     console.log(this.state.messageTitle + " " + this.state.messageContent);
     fetch(
-      `/api/send/friend/message?receiver=${this.state.receiver}&sender=${this.state.user}&title=${this.state.messageTitle}&content=${this.state.messageContent}`
+      `/api/send/neighbor/message?receiver=${this.state.receiver}&sender=${this.state.user}&title=${this.state.messageTitle}&content=${this.state.messageContent}`
     )
       .then(res => res.json())
       .then(data => {
@@ -100,4 +100,4 @@ class RelationShowCase extends Component {
   }
 }
 
-export default RelationShowCase;
+export default NeighborShowCase;

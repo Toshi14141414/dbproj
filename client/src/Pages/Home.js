@@ -7,6 +7,7 @@ import default_user_img from "../default_img/default_user_icon.png";
 
 //Customer Components
 import RelationShowCase from "../components/RelationShowCase";
+import NeighborShowCase from "../components/NeighborShowCase";
 import FeedTitle from "../components/FeedTitle";
 import BlockNewsDetail from "../components/BlockNewsDetail";
 import NewsDetail from "../components/NewsDetail";
@@ -31,7 +32,8 @@ class Home extends Component {
       hasUnreadMSG: false,
       checkDefault: true,
       feeds: [],
-      checkRelation: false,
+      checkFriendRelation: false,
+      checkNeighborRelation: false,
       relation: [],
       checkTypeFeeds: false,
       typeFeeds: [],
@@ -45,7 +47,10 @@ class Home extends Component {
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
-    this.handleRelationClick = this.handleRelationClick.bind(this);
+    this.handleFriendRelationClick = this.handleFriendRelationClick.bind(this);
+    this.handleNeighborRelationClick = this.handleNeighborRelationClick.bind(
+      this
+    );
     this.handleAddFeedClick = this.handleAddFeedClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleAddFeedSubmit = this.handleAddFeedSubmit.bind(this);
@@ -86,7 +91,8 @@ class Home extends Component {
         console.log(data);
         this.setState({
           checkDefault: false,
-          checkRelation: false,
+          checkFriendRelation: false,
+          checkNeighborRelation: false,
           checkAddFeed: false,
           checkTypeFeeds: true,
           checkNews: false,
@@ -96,8 +102,8 @@ class Home extends Component {
       .catch(err => console.error(err));
   }
 
-  handleRelationClick(e) {
-    const type = e.target.name;
+  handleFriendRelationClick(e) {
+    const type = "list_all_friends";
     console.log("trying to get all " + type + " relationship");
     fetch(`/api/home/relation?type=${type}&email=${this.state.userEmail}`)
       .then(res => res.json())
@@ -107,7 +113,28 @@ class Home extends Component {
           checkDefault: false,
           checkTypeFeeds: false,
           checkAddFeed: false,
-          checkRelation: true,
+          checkFriendRelation: true,
+          checkNeighborRelation: false,
+          checkNews: false,
+          relation: data.relation
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleNeighborRelationClick(e) {
+    const type = "list_all_neighbors";
+    console.log("trying to get all " + type + " relationship");
+    fetch(`/api/home/relation?type=${type}&email=${this.state.userEmail}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          checkDefault: false,
+          checkTypeFeeds: false,
+          checkAddFeed: false,
+          checkFriendRelation: false,
+          checkNeighborRelation: true,
           checkNews: false,
           relation: data.relation
         });
@@ -120,7 +147,8 @@ class Home extends Component {
       checkDefault: false,
       checkTypeFeeds: false,
       checkAddFeed: true,
-      checkRelation: false,
+      checkFriendRelation: false,
+      checkNeighborRelation: false,
       checkNews: false
     });
   }
@@ -214,7 +242,7 @@ class Home extends Component {
                 <button
                   name="list_all_friends"
                   className="home-button-green"
-                  onClick={e => this.handleRelationClick(e)}
+                  onClick={e => this.handleFriendRelationClick(e)}
                 >
                   Friends
                 </button>
@@ -223,7 +251,7 @@ class Home extends Component {
                 <button
                   name="list_all_neighbors"
                   className="home-button-green"
-                  onClick={e => this.handleRelationClick(e)}
+                  onClick={e => this.handleNeighborRelationClick(e)}
                 >
                   Neighbor
                 </button>
@@ -308,10 +336,24 @@ class Home extends Component {
                 ))}
               </div>
             )}
-            {this.state.checkRelation &&
+            {this.state.checkFriendRelation &&
               this.state.relation.map(relation => (
                 <Container>
-                  <RelationShowCase value={relation} key={relation.friend_id} />
+                  <RelationShowCase
+                    value={relation}
+                    key={relation.friend_id}
+                    user={this.state.userEmail}
+                  />
+                </Container>
+              ))}
+            {this.state.checkNeighborRelation &&
+              this.state.relation.map(relation => (
+                <Container>
+                  <NeighborShowCase
+                    value={relation}
+                    key={relation.friend_id}
+                    user={this.state.userEmail}
+                  />
                 </Container>
               ))}
             {this.state.checkAddFeed && (
