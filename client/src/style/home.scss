@@ -132,3 +132,18 @@
   width: 6.7rem;
   margin-bottom: 0.3rem;
 }
+
+.search-result-title {
+  color: $primary-grey;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: normal;
+  border: none;
+  margin-left: 2.2rem;
+}
+
+.search-result-title:hover {
+  color: $primary-green;
+  text-decoration: underline;
+}

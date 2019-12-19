@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Envelope, EnvelopeOpen } from "styled-icons/fa-regular";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+import { withRouter } from "react-router-dom";
 
 //img
 import default_user_img from "../default_img/default_user_icon.png";
@@ -53,7 +54,9 @@ class Home extends Component {
       isChoosingBlocks: false,
       newBlockID: null,
       showLeaveBlockButton: true,
-      search: null
+      search: null,
+      searchResult: [],
+      showSearchResult: false
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -72,6 +75,7 @@ class Home extends Component {
     this.handleJoinNewBlock = this.handleJoinNewBlock.bind(this);
     this.handleJoinANewBlock = this.handleJoinANewBlock.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleGoToResult = this.handleGoToResult.bind(this);
   }
 
   componentDidMount() {
@@ -114,6 +118,7 @@ class Home extends Component {
           checkTypeFeeds: true,
           checkNews: false,
           checkEditProfile: false,
+          showSearchResult: false,
           typeFeeds: data.feeds
         });
       })
@@ -135,6 +140,7 @@ class Home extends Component {
           checkNeighborRelation: false,
           checkNews: false,
           checkEditProfile: false,
+          showSearchResult: false,
           relation: data.relation
         });
       })
@@ -156,6 +162,7 @@ class Home extends Component {
           checkNeighborRelation: true,
           checkNews: false,
           checkEditProfile: false,
+          showSearchResult: false,
           relation: data.relation
         });
       })
@@ -170,7 +177,8 @@ class Home extends Component {
       checkFriendRelation: false,
       checkNeighborRelation: false,
       checkEditProfile: false,
-      checkNews: false
+      checkNews: false,
+      showSearchResult: false
     });
   }
 
@@ -182,7 +190,8 @@ class Home extends Component {
       checkFriendRelation: false,
       checkNeighborRelation: false,
       checkEditProfile: true,
-      checkNews: false
+      checkNews: false,
+      showSearchResult: false
     });
   }
 
@@ -211,7 +220,8 @@ class Home extends Component {
       checkFriendRelation: false,
       checkNeighborRelation: false,
       checkEditProfile: false,
-      checkNews: true
+      checkNews: true,
+      showSearchResult: false
     });
     console.log("trying to get news");
     fetch(`/api/news?email=${this.state.userEmail}`)
@@ -291,14 +301,33 @@ class Home extends Component {
 
   handleSearch() {
     console.log(this.state.search);
+    this.setState({
+      checkDefault: false,
+      checkTypeFeeds: false,
+      checkAddFeed: false,
+      checkFriendRelation: false,
+      checkNeighborRelation: false,
+      checkEditProfile: false,
+      checkNews: false,
+      showSearchResult: true
+    });
     fetch(
       `/api/search?email=${this.state.userEmail}&keyword=${this.state.search}`
     )
       .then(res => res.json())
       .then(data => {
         console.log(data);
+        this.setState({ searchResult: data.results });
       })
       .catch(err => console.error(err));
+  }
+
+  handleGoToResult(e) {
+    console.log(e.target.name);
+    this.props.history.push({
+      pathname: `/post:${e.target.name}`,
+      state: { thread_id: e.target.name, user: this.state.userEmail }
+    });
   }
 
   render() {
@@ -661,6 +690,23 @@ class Home extends Component {
                 ))}
               </div>
             )}
+            {this.state.showSearchResult && (
+              <Container>
+                <p className="home-right-title">Search Results</p>
+                {this.state.searchResult.map(mes => (
+                  <Row>
+                    <button
+                      className="search-result-title"
+                      onClick={e => this.handleGoToResult(e)}
+                      name={mes.tid}
+                      key={mes.tid}
+                    >
+                      {mes.title}
+                    </button>
+                  </Row>
+                ))}
+              </Container>
+            )}
           </Col>
         </Row>
       </Container>
@@ -671,4 +717,4 @@ class Home extends Component {
 const API = "AIzaSyDWSSP4kcgzwIbkBWqGcQZbXmWcYv3nFN0";
 export default GoogleApiWrapper({
   apiKey: API
-})(Home);
+})(withRouter(Home));
