@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
+
+import "../style/register.scss";
 
 class Register extends Component {
   constructor(props) {
@@ -22,27 +25,26 @@ class Register extends Component {
       state: null,
       checkState: false,
       password: null,
-      checkPassword: false
+      checkPassword: false,
+      latitude: null,
+      longitude: null,
+      selectedPlace: {},
+      activeMarker: {}
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
   }
 
-  // handleEmailChange(event) {
-  //   this.setState({
-  //     [event.target.name]: event.target.value
-  //   });
-  //   // if (
-  //   //   /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(event.target.value)
-  //   // ) {
-  //   //   console.log("email correct");
-  //   //   // this.setState({ email: inputEmail });
-  //   // } else {
-  //   //   // this.setState({ checkEmail: !this.state.checkEmail });
-  //   //   console.log("your email address is wrong");
-  //   // }
-  // }
+  onMapClick = (props, marker, e) =>
+    this.setState({
+      selectedPlace: e,
+      activeMarker: marker,
+      latitude: e.latLng.lat(),
+      longitude: e.latLng.lng(),
+      showingInfoWindow: true
+    });
 
   handleChange(event) {
     this.setState({
@@ -60,11 +62,9 @@ class Register extends Component {
   }
 
   handleSubmit(event) {
-    // alert("email" + this.state.email);
-    // alert("password" + this.state.password);
     event.preventDefault();
     fetch(
-      `/api/register?email=${this.state.email}&firstName=${this.state.firstName}&lastName=${this.state.lastName}&sex=${this.state.sex}&address=${this.state.address}&apt=${this.state.apt}&city=${this.state.city}&state=${this.state.state}&zip=${this.state.zip}&password=${this.state.password}`
+      `/api/register?email=${this.state.email}&firstName=${this.state.firstName}&lastName=${this.state.lastName}&sex=${this.state.sex}&latitude=${this.state.latitude}&longitude=${this.state.longitude}&password=${this.state.password}`
     )
       .then(res => res.json())
       .then(data => {
@@ -77,120 +77,163 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
+      <div className="register-form-div">
         <Container>
-          <form onSubmit={this.handleSubmit}>
-            <Row>
-              <label>
+          <form className="register-form" onSubmit={this.handleSubmit}>
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
                 Email:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="email"
-                  className="register"
+                  className="register-input"
                   value={this.state.email || ""}
                   onChange={this.handleChange}
                 ></input>
                 {this.state.checkEmail && (
                   <p>Please enter correct email address</p>
                 )}
-              </label>
+              </Col>
             </Row>
-            <Row>
-              <label>
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
                 First Name:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="firstName"
-                  className="register"
+                  className="register-input"
                   value={this.state.firstName || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
+              </Col>
             </Row>
-            <Row>
-              <label>
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
                 Last Name:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="lastName"
-                  className="register"
+                  className="register-input"
                   value={this.state.lastName || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
+              </Col>
             </Row>
-            <Row>
-              <select
-                name="sex"
-                value={this.state.sex || ""}
-                onChange={this.handleChange}
-              >
-                <option value="Other">Other</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
+                Gender:
+              </Col>
+              <Col sm={8}>
+                <select
+                  name="sex"
+                  value={this.state.sex || ""}
+                  onChange={this.handleChange}
+                >
+                  <option value="Other">Other</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </Col>
             </Row>
-            <Row>
-              <label>
+            {/* <Row className="register-row">
+              <Col sm={4} className="register-text">
                 Address:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="address"
-                  className="register"
+                  className="register-input"
                   value={this.state.address || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
-            </Row>
-            <Row>
-              <label>
+              </Col>
+            </Row> */}
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
                 Apt:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="apt"
-                  className="register"
+                  className="register-input"
                   value={this.state.apt || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
+              </Col>
             </Row>
-            <Row>
-              <label>
+            {/* <Row className="register-row">
+              <Col sm={4} className="register-text">
                 City:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="city"
-                  className="register"
+                  className="register-input"
                   value={this.state.city || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
+              </Col>
             </Row>
-            <Row>
-              <label>
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
                 State:
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="state"
-                  className="register"
+                  className="register-input"
                   value={this.state.state || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
-            </Row>
+              </Col>
+            </Row> */}
             <Row>
-              <label>
+              <Map
+                google={this.props.google}
+                zoom={14}
+                initialCenter={{ lat: 40.690871, lng: -73.986116 }}
+                style={{ marginTop: "45px", width: "400px", height: "300px" }}
+                onClick={this.onMapClick}
+              >
+                <Marker
+                  position={{
+                    lat: this.state.latitude,
+                    lng: this.state.longitude
+                  }}
+                />
+              </Map>
+            </Row>
+            <Row className="register-row">
+              <Col sm={4} className="register-text">
                 Password
+              </Col>
+              <Col sm={8}>
                 <input
                   type="text"
                   name="password"
-                  className="register"
+                  className="register-input"
                   value={this.state.password || ""}
                   onChange={this.handleChange}
                 ></input>
-              </label>
+              </Col>
             </Row>
-            <input type="submit" value="Sign Up" />
+            <Row className="register-button-row">
+              <input
+                className="register-button"
+                type="submit"
+                value="Sign Up"
+              />
+            </Row>
           </form>
         </Container>
       </div>
@@ -198,4 +241,8 @@ class Register extends Component {
   }
 }
 
-export default withRouter(Register);
+const API = "AIzaSyDWSSP4kcgzwIbkBWqGcQZbXmWcYv3nFN0";
+
+export default GoogleApiWrapper({
+  apiKey: API
+})(withRouter(Register));

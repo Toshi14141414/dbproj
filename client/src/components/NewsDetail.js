@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 
+import "../style/news.scss";
+
 class NewsDetail extends Component {
   constructor(props) {
     super(props);
@@ -39,14 +41,20 @@ class NewsDetail extends Component {
 
   render() {
     return (
-      <Container>
+      <Container className="news-container">
         <Row>
-          <Col sm={6}>{this.props.value.title}</Col>
-          <Col sm={3}>
-            <button onClick={this.handleAcceptClick}>Accept</button>
+          <Col sm={6}>
+            <p className="news-title">{this.props.value.title}</p>
           </Col>
           <Col sm={3}>
-            <button onClick={this.handleDeclineClick}>Decline</button>
+            <button className="news-button" onClick={this.handleAcceptClick}>
+              Accept
+            </button>
+          </Col>
+          <Col sm={3}>
+            <button className="news-button" onClick={this.handleDeclineClick}>
+              Decline
+            </button>
           </Col>
         </Row>
       </Container>
