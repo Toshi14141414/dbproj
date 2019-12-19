@@ -28,5 +28,24 @@ router.get('/block', async (req, res, next)=>{
 
 });
 
+router.get('/newblock', async (req, res, next)=>{
+
+    const {email, latitude, longitude} = req.query;
+    console.log(email, latitude, longitude);
+
+    try{
+        let nearBlocks = await db.listNearBlocks(email, latitude, longitude);
+        var nearBlock_string = JSON.stringify(nearBlocks);
+        var nearBlock_json = JSON.parse(nearBlock_string)[0];
+        var result = {suggested_blocks : nearBlock_json};
+            console.log(result);
+            res.send(result);
+       
+    }catch(e){
+        console.log(e);
+        res.sendStatus(500);
+    }
+
+});
 
 module.exports = router;
