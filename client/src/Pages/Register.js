@@ -20,6 +20,7 @@ class Register extends Component {
       checkAddress: false,
       sex: "other",
       apt: null,
+      result: true,
       city: null,
       checkCity: false,
       state: null,
@@ -29,13 +30,13 @@ class Register extends Component {
       latitude: null,
       longitude: null,
       selectedPlace: {},
-      activeMarker: {}
+      activeMarker: {},
+      suggestBlocks: []
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
-    this.registerResponse = this.registerResponse.bind(this);
   }
 
   onMapClick = (props, marker, e) =>
@@ -53,18 +54,6 @@ class Register extends Component {
     });
   }
 
-  registerResponse() {
-    if (!this.state.result) {
-      alert("Register Failer, Please try another email");
-    } else {
-      alert("Register success");
-      this.props.history.push({
-        pathname: `/selectBlock`,
-        state: { user: this.state.email }
-      });
-    }
-  }
-
   handleSubmit(event) {
     event.preventDefault();
     alert("sending info");
@@ -73,10 +62,22 @@ class Register extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        console.log(data.suggested_blocks);
+        this.setState({
+          result: data.result,
+          suggestBlocks: data.suggested_blocks
+        });
+        if (!data.result) {
+          alert("Register Failer, Please try another email");
+        } else {
+          alert("blocks: " + data.suggested_blocks);
+          this.props.history.push({
+            pathname: `/selectBlock`,
+            state: { user: this.state.email, blocks: data.suggested_blocks }
+          });
+        }
       })
       .catch(err => console.error(err));
-    this.registerResponse();
   }
 
   render() {
