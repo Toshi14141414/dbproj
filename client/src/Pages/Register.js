@@ -35,6 +35,7 @@ class Register extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
+    this.registerResponse = this.registerResponse.bind(this);
   }
 
   onMapClick = (props, marker, e) =>
@@ -75,6 +76,7 @@ class Register extends Component {
         console.log(data);
       })
       .catch(err => console.error(err));
+    this.registerResponse();
   }
 
   render() {
@@ -142,20 +144,6 @@ class Register extends Component {
               </select>
             </Col>
           </Row>
-          {/* <Row className="register-row">
-              <Col sm={4} className="register-text">
-                Address:
-              </Col>
-              <Col sm={8}>
-                <input
-                  type="text"
-                  name="address"
-                  className="register-input"
-                  value={this.state.address || ""}
-                  onChange={this.handleChange}
-                ></input>
-              </Col>
-            </Row> */}
           <Row className="register-row">
             <Col sm={4} className="register-text">
               Apt:
@@ -170,34 +158,6 @@ class Register extends Component {
               ></input>
             </Col>
           </Row>
-          {/* <Row className="register-row">
-              <Col sm={4} className="register-text">
-                City:
-              </Col>
-              <Col sm={8}>
-                <input
-                  type="text"
-                  name="city"
-                  className="register-input"
-                  value={this.state.city || ""}
-                  onChange={this.handleChange}
-                ></input>
-              </Col>
-            </Row>
-            <Row className="register-row">
-              <Col sm={4} className="register-text">
-                State:
-              </Col>
-              <Col sm={8}>
-                <input
-                  type="text"
-                  name="state"
-                  className="register-input"
-                  value={this.state.state || ""}
-                  onChange={this.handleChange}
-                ></input>
-              </Col>
-            </Row> */}
           <Row className="register-row">
             <Col sm={4} className="register-text">
               Password
