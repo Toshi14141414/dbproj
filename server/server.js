@@ -19,6 +19,7 @@ app.use('/api/post', post_info);
 app.use('/api/reply', reply);
 app.use('/api/addfeed', addfeed);
 app.use('/api/news', news);
+
 // 1. express-validator // check if valid input fields
 // 2. json web token
 // token

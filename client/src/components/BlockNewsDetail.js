@@ -17,7 +17,7 @@ class BlockNewsDetail extends Component {
   handleAcceptClick() {
     console.log("block accept");
     fetch(
-      `/api/news/block/back?sender=${this.state.senderEmail}&user=${this.state.userEmail}&type=APPROVED&target=${this.state.targetBid}&time=${this.state.time}`
+      `/api/news/block/back?sender=${this.state.senderEmail}&user=${this.state.userEmail}&type=APPROVE&target=${this.state.targetBid}&time=${this.state.time}`
     )
       .then(res => res.json())
       .then(data => {
