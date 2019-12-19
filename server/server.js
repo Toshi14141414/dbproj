@@ -8,6 +8,7 @@ const addfeed = require('./routes/addfeed');
 const news = require('./routes/news');
 const selectBlock = require('./routes/selectBlock');
 const sendMessage = require('./routes/sendMessage');
+const editProfile = require('./routes/editProfile');
 const cors = require("cors");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/addfeed', addfeed);
 app.use('/api/news', news);
 app.use('/api/join/block', selectBlock);
 app.use('/api/send', sendMessage);
+app.use('/api/edit/', editProfile);
 // 1. express-validator // check if valid input fields
 // 2. json web token
 // token
