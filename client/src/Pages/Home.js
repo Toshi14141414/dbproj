@@ -228,7 +228,7 @@ class Home extends Component {
       this.state.userEmail + this.state.editLatitude + this.state.editLongitude
     );
     fetch(
-      `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}`
+      `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}&bid=${this.state.bid}&apt=${this.state.apt}`
     )
       .then(res => res.json())
       .then(data => {

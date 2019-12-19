@@ -10,6 +10,38 @@ const conn = mysql.createPool({
 
 let db = {};
 
+db.EnterAddress = (user, apt_info, lat, long) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call EnterAddress(?, ?, ?, ?)`,
+      [user, apt_info, lat, long],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(results);
+      }
+    );
+  });
+};
+
+db.leaveBlock = (user, bid) =>{
+  return new Promise((resolve, reject) => {
+    conn.query(
+      `call leaveBlock(?, ?)`,
+      [user, bid],
+      (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+
+        return resolve(results);
+      }
+    );
+  });
+};
+
+
 db.StartMessageWith = (user, target, type, title, body) =>{
   return new Promise((resolve, reject) => {
     conn.query(
