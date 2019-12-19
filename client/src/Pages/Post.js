@@ -64,7 +64,11 @@ class Post extends Component {
           <p className="post-title">{this.state.title}</p>
         </Row>
         {this.state.messages.map(message => (
-          <PostDetail value={message} key={message.mid} />
+          <PostDetail
+            value={message}
+            key={message.mid}
+            user={this.state.user}
+          />
         ))}
         <Row className="post-reply-row post-input">
           <input
