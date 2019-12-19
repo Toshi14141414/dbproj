@@ -24,7 +24,7 @@ export class PostDetail extends Component {
   handleAddFriend() {
     console.log(this.state.user + " " + this.state.sender);
     fetch(
-      `/api/add/friend?user=${this.state.user}&reveiver=${this.state.sender}`
+      `/api/add/friend?user=${this.state.user}&receiver=${this.state.sender}`
     )
       .then(res => res.json())
       .then(data => {
