@@ -50,7 +50,8 @@ class Home extends Component {
       editLatitude: null,
       editLongitude: null,
       editblocks: [],
-      isChoosingBlocks: false
+      isChoosingBlocks: false,
+      newBlockID: null
     };
 
     this.handleFeedClick = this.handleFeedClick.bind(this);
@@ -66,6 +67,7 @@ class Home extends Component {
     this.handleLeaveBlock = this.handleLeaveBlock.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.handleEditBlock = this.handleEditBlock.bind(this);
+    this.handleJoinNewBlock = this.handleJoinNewBlock.bind(this);
   }
 
   componentDidMount() {
@@ -226,6 +228,7 @@ class Home extends Component {
     });
 
   handleEditBlock() {
+    this.setState({ isChoosingBlocks: true, isLeaveBlock: false });
     fetch(
       `/api/edit/block?email=${this.state.userEmail}&latitude=${this.state.editLatitude}&longitude=${this.state.editLongitude}&bid=${this.state.bid}&apt=${this.state.apt}`
     )
@@ -233,9 +236,22 @@ class Home extends Component {
       .then(data => {
         console.log(data);
         this.setState({
-          editblocks: data,
-          isChoosingBlocks: true,
-          isLeaveBlock: false
+          editblocks: data
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  handleJoinNewBlock(e) {
+    this.setState({ newBlockID: e.target.value.bid });
+    fetch(
+      `/api/join/new/block?email=${this.state.userEmail}&bid=${this.state.bid}`
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        this.setState({
+          editblocks: data
         });
       })
       .catch(err => console.error(err));
@@ -489,7 +505,10 @@ class Home extends Component {
                 </Row>
                 {this.state.isLeaveBlock && (
                   <div>
-                    <button onClick={this.handleEditBlock} className="edit-profile-submit-button">
+                    <button
+                      onClick={this.handleEditBlock}
+                      className="edit-profile-submit-button"
+                    >
                       Submit
                     </button>
                     <Map
@@ -515,26 +534,7 @@ class Home extends Component {
                 )}
                 {this.state.isChoosingBlocks && (
                   <div>
-                    <button onClick={this.handleEditBlock}>Submit</button>
-                    <Map
-                      google={this.props.google}
-                      zoom={14}
-                      initialCenter={{ lat: 40.690871, lng: -73.986116 }}
-                      style={{
-                        marginTop: "10px",
-                        marginLeft: "35px",
-                        width: "600px",
-                        height: "400px"
-                      }}
-                      onClick={this.onMapClick}
-                    >
-                      <Marker
-                        position={{
-                          lat: this.state.editLatitude,
-                          lng: this.state.editLongitude
-                        }}
-                      />
-                    </Map>
+                    <button onClick={this.handleJoinNewBlock}>Blocks</button>
                   </div>
                 )}
               </Container>
