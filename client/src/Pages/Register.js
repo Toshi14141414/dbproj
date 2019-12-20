@@ -5,6 +5,8 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 import "../style/register.scss";
 
+require("dotenv").config();
+
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -37,6 +39,7 @@ class Register extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
+    this.handleEmailChange = this.handleEmailChange.bind(this);
   }
 
   onMapClick = (props, marker, e) =>
@@ -54,29 +57,43 @@ class Register extends Component {
     });
   }
 
+  handleEmailChange(event) {
+    this.setState({
+      email: event.target.value
+    });
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email)
+    ) {
+      this.setState({ checkEmail: true });
+    }
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    alert("sending info");
-    fetch(
-      `/api/register?email=${this.state.email}&firstName=${this.state.firstName}&lastName=${this.state.lastName}&sex=${this.state.sex}&latitude=${this.state.latitude}&longitude=${this.state.longitude}&password=${this.state.password}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.suggested_blocks);
-        this.setState({
-          result: data.result,
-          suggestBlocks: data.suggested_blocks
-        });
-        if (!data.result) {
-          alert("Register Failer, Please try another email");
-        } else {
-          this.props.history.push({
-            pathname: `/selectBlock`,
-            state: { user: this.state.email, blocks: data.suggested_blocks }
+    if (this.state.checkEmail) {
+      alert("Please enter correct email address");
+    } else {
+      fetch(
+        `/api/register?email=${this.state.email}&firstName=${this.state.firstName}&lastName=${this.state.lastName}&sex=${this.state.sex}&latitude=${this.state.latitude}&longitude=${this.state.longitude}&password=${this.state.password}`
+      )
+        .then(res => res.json())
+        .then(data => {
+          console.log(data.suggested_blocks);
+          this.setState({
+            result: data.result,
+            suggestBlocks: data.suggested_blocks
           });
-        }
-      })
-      .catch(err => console.error(err));
+          if (!data.result) {
+            alert("Register Failer, Please try another email");
+          } else {
+            this.props.history.push({
+              pathname: `/selectBlock`,
+              state: { user: this.state.email, blocks: data.suggested_blocks }
+            });
+          }
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   render() {
@@ -93,11 +110,8 @@ class Register extends Component {
                 name="email"
                 className="register-input"
                 value={this.state.email || ""}
-                onChange={this.handleChange}
+                onChange={this.handleEmailChange}
               ></input>
-              {this.state.checkEmail && (
-                <p>Please enter correct email address</p>
-              )}
             </Col>
           </Row>
           <Row className="register-row">
@@ -208,7 +222,7 @@ class Register extends Component {
   }
 }
 
-const API = "AIzaSyDWSSP4kcgzwIbkBWqGcQZbXmWcYv3nFN0";
+const API = process.env.REACT_APP_GOOGLE_MAP_API;
 
 export default GoogleApiWrapper({
   apiKey: API

@@ -17,6 +17,8 @@ import NewsDetail from "../components/NewsDetail";
 //style
 import "../style/home.scss";
 
+require("dotenv").config();
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -714,7 +716,8 @@ class Home extends Component {
   }
 }
 
-const API = "AIzaSyDWSSP4kcgzwIbkBWqGcQZbXmWcYv3nFN0";
+const API = process.env.REACT_APP_GOOGLE_MAP_API;
+
 export default GoogleApiWrapper({
   apiKey: API
 })(withRouter(Home));
